@@ -1,0 +1,61 @@
+h3{
+    margin: auto;
+    position: relative;
+    left: 0%;  
+    font-size: 25px !important;
+    margin-bottom: 10px;
+}
+
+.radio{
+    margin-left: 25px;
+}
+
+.select{
+    margin-top: 2% !important;
+}
+
+.form-control-report{
+    width: 45% !important;
+}
+
+.report-card{
+    width: 125% !important;
+}
+
+.row-report{
+    position: relative;
+    left: -10% !important;
+}
+
+.upload_photo{
+    position: absolute ;
+    top: 18% ;
+    right: 10%;
+    width: 25%;
+
+
+}
+
+input[type="file"] {
+    display: none;
+}
+.custom-file-upload {
+    border: 1px solid #ccc;
+    padding: 6px 12px;
+    display: block;
+    cursor: pointer;
+    border-radius: 3px;
+    background-color: #4b5363;
+    color: white;
+
+}
+
+.photo{
+    border: 1px solid rgb(0, 0, 0);
+    max-width: 232px;
+    height:232px;
+    width: 100%;
+    display: block;
+    border-radius: 3px;
+
+}
