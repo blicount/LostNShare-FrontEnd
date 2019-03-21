@@ -3,7 +3,6 @@ import  RegisterForm from '../Forms/RegisterForm'
 import {connect} from 'react-redux'
 import {googleUserData} from '../../actions/formActions' 
 import {userRegisterRequest} from '../../actions/formActions'
-import "../../css/logto.css";
 import "../../css/bootstrap.min.css"
  
 class RegisterPage extends React.Component {

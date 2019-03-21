@@ -1,0 +1,37 @@
+
+
+
+/*side nav profile*/
+
+#profile_nav{
+    max-width: 300px;
+    height: 600px;
+    width: 100%; 
+    background-color:  rgba(140, 177, 252, 0.5);
+}
+
+#profile_nav {
+    width: 100%;
+} 
+
+#profile_nav li{
+    display: block;
+    font-size: 20px;
+    padding: 20px;
+    border-bottom: 1px solid white;
+    
+} 
+
+#profile_nav li:hover{
+    background-color: rgb(40, 44, 52,0.9) ;
+    color: white;
+    transition: background-color 0.5s ease-in-out;
+    cursor: pointer;
+} 
+
+#profile_nav li a{
+    margin-left: 20%;
+    font-size: 20px;
+    
+} 
+

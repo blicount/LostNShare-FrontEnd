@@ -1,21 +1,28 @@
 import React from 'react';
-import  RegisterForm from '../Forms/RegisterForm'
 import {connect} from 'react-redux'
 import {userReportRequest} from '../../actions/formActions'
-import "../../css/logto.css";
+//import {Redirect} from 'react-router-dom';
+import  ReportForm from '../Forms/ReportFrom'
 import "../../css/bootstrap.min.css"
- 
-class RegisterPage extends React.Component {
-    /*
+//import LoginPage from './LoginPage';
+import Massage from '../Objects/Massage'
+
+class RegisterPage extends React.Component { 
     constructor(props) {
         super(props);
+        this.state = {}
     }
-   */
+
+
     render(){
+        if (sessionStorage.getItem('userData') == null) {
+            return (<Massage/>)
+        }
+
         const {userReportRequest} = this.props;
         return (
             <div>
-                <RegisterForm userReportRequest={userReportRequest}/>  
+                <ReportForm userReportRequest={userReportRequest}/>  
             </div>
         );
  

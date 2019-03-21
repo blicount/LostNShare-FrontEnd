@@ -6,15 +6,15 @@ export function userRegisterRequest(userData) {
    }
 }
 
-export function userReportRequest(identifier) {
+export function userReportRequest(itemData) {
   return dispatch => {
-    return axios.get(`/api/users/${identifier}`);
+    return axios.post('https://lost-and-share.herokuapp.com/users/report', itemData);
   }
 }
 
-export function userLoginRequest(identifier) {
+export function userLoginRequest(userData) {
   return dispatch => {
-    return axios.get(`/api/users/${identifier}`);
+    return axios.post('https://lost-and-share.herokuapp.com/users/login', userData);
   }
 }
 
@@ -29,22 +29,22 @@ export function isUserExists(identifier) {
 
 export function googleUserData(type, userData) {
   
-  let BaseURL = 'http://localhost:3000/Register';
-  //let BaseURL = 'http://localhost/socialapi/';
-  
-  return new Promise((resolve, reject) =>{
-  fetch(BaseURL+type, {
-      method: 'POST',
-      body: JSON.stringify(userData)
-  })
-  .then((response) => response.json())
-  .then((res) => {
-      resolve(res);
-  })
-  .catch((error) => {
-     reject(error);
-  });
-  
-  });
-  
+    //let BaseURL = 'http://localhost:3000/Register';
+    //let BaseURL = 'http://localhost/socialapi/';
+    
+      return{} /*new Promise((resolve, reject) =>{
+      fetch(BaseURL+type, {
+          method: 'POST',
+          body: JSON.stringify(userData)
+      })
+      .then((response) => response.json())
+      .then((res) => {
+          resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+      
+      });
+    */
   }

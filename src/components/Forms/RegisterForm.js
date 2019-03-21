@@ -3,20 +3,26 @@ import {withRouter} from 'react-router-dom';
 import GoogleLogin from 'react-google-login';
 
 //import GoogleLogout  from 'react-google-login';
-import {Redirect} from 'react-router-dom';
-import "../../css/logto.css";
+//import {Redirect} from 'react-router-dom';
 import "../../css/bootstrap.min.css"
 
 class RegisterForm extends React.Component {
     constructor(props) {
         super(props);
            this.state = {
+            id:'',
             name:'',
             email:'',
             password:'',
             password2:'',
             err:'',
-            status:''
+            status:'',
+            token:'',
+            provider_pic:'',
+            provider:'lns',
+            provider_id:'123809',
+            login:false
+
     };
     
     this.onChange = this.onChange.bind(this);
@@ -31,26 +37,31 @@ class RegisterForm extends React.Component {
     onSubmit(e){
         e.preventDefault();
        
-        this.setState({err:{},isLoading: true})
         this.props.userRegisterRequest(this.state).then(            
             ({ data }) =>{
+                console.log(data);
                  this.setState({err:data.err,isLoading: false,status:data.status})
                  if(this.state.password !== this.state.password2){
                     document.getElementById("password").style.borderColor  = "red";
                     document.getElementById("password2").style.borderColor  = "red";
-                    document.getElementById("Label_password").innerHTML = "Passwords - dosen't match";
-                    document.getElementById("Label_password").style.color  = "red";  
+                    document.getElementById("label_password").innerHTML = "Passwords - dosen't match";
+                    document.getElementById("label_password").style.color  = "red";  
                  }
                  else if(this.state.status === 'fail'){
                     document.getElementById("email").style.borderColor  = "red";
-                    document.getElementById("Label_email").innerHTML = "Email - this Email is already in use";
-                    document.getElementById("Label_email").style.color  = "red";  
+                    document.getElementById("label_email").innerHTML = "Email - this Email is already in use";
+                    document.getElementById("label_email").style.color  = "red";  
                     this.setState({err:{},isLoading: false,status:{}})      
                 }else{
+                    this.setState({login:true})
+                    sessionStorage.setItem("userData", JSON.stringify(this.state));  
                     this.props.history.push('/');
                 }
             }
-        );   
+        ).catch((error) =>{
+            console.log(error);
+            
+        });   
     }
 
     
@@ -71,7 +82,8 @@ class RegisterForm extends React.Component {
         if (postData) {
             this.props.googleUserData('signup', postData).then((result) => {
             let responseJson = result;
-            localStorage.setItem("userData", JSON.stringify(responseJson));
+            console.log(result);
+            sessionStorage.setItem("userData", JSON.stringify(responseJson));
             
             this.props.history.push('/');
         });
@@ -79,9 +91,7 @@ class RegisterForm extends React.Component {
     }
 
     render(){
-        if (this.state.redirect || sessionStorage.getItem('userData')) {
-            return (<Redirect to={'/Main'}/>)
-        }
+
 
         const responseGoogle = (response) => {
             console.log("google console");
@@ -106,12 +116,10 @@ class RegisterForm extends React.Component {
                                 className="form-control"
                                 placeholder="Enter Name"
                                 pattern=".{3,10}" required title="3 to 10 characters"
-
-                            />
-                            
+                            />                    
                             </div>
                             <div className="form-group">
-                            <label htmlFor="email" id="Label_email">Email</label>
+                            <label htmlFor="email" id="label_email">Email</label>
                             <input
                                 value={this.state.email}
                                 onChange={this.onChange}
@@ -120,12 +128,11 @@ class RegisterForm extends React.Component {
                                 name="email"
                                 className="form-control"
                                 placeholder="Enter Email"
-                                required
-                                
+                                required                   
                             />
                             </div>
                             <div className="form-group">
-                            <label id="Label_password" htmlFor="password">Password</label>
+                            <label id="label_password" htmlFor="password">Password</label>
                             <input
                                 value={this.state.password}
                                 onChange={this.onChange}
@@ -134,8 +141,7 @@ class RegisterForm extends React.Component {
                                 name="password"
                                 className="form-control"
                                 placeholder="Create Password"
-                                pattern=".{6,10}" required title="6 to 10 characters"
-                            
+                                pattern=".{6,10}" required title="6 to 10 characters"               
                             />
                             </div>
                             <div className="form-group">
@@ -148,8 +154,7 @@ class RegisterForm extends React.Component {
                                 name="password2"
                                 className="form-control"
                                 placeholder="Confirm Password"  
-                                pattern=".{6,10}" required title="6 to 10 characters"
-                  
+                                pattern=".{6,10}" required title="6 to 10 characters"     
                             />
                             </div>
                             <button type="submit" className="btn btn-primary btn-block submit">

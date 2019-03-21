@@ -1,21 +1,33 @@
 import React from 'react';
+import {withRouter} from 'react-router-dom';
 import GoogleLogin from 'react-google-login';
 //import GoogleLogout  from 'react-google-login';
-import {Redirect} from 'react-router-dom';
-import "../../css/logto.css";
+//import {Redirect} from 'react-router-dom';
+import "../../css/login.css";
+
 import "../../css/bootstrap.min.css"
 
 class Login extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            id:'',
+            name:'',
             email:'',
-            password:''
-        };
+            password:'',
+            password2:'',
+            err:'',
+            status:'',
+            token:'',
+            provider_pic:'',
+            provider:'lns',
+            provider_id:'123809',
+            login:false
+    };
         this.onChange = this.onChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
         this.googleLogin = this.googleLogin.bind(this);
-        }
+    }
     
     onChange(e){
         this.setState({[e.target.name]: e.target.value});
@@ -25,29 +37,36 @@ class Login extends React.Component {
     onSubmit(e){
         e.preventDefault();
        
-        this.setState({err:{},isLoading: true})
-        this.props.userLoginRequest(this.state).then(            
+        this.setState({status:'fail'})
+        this.props.userLoginRequest(this.state)
+        .then(            
             ({ data }) =>{
+                console.log(data);         
                  this.setState({err:data.err,isLoading: false,status:data.status})
-                 if(this.state.password !== this.state.password2){
-                    document.getElementById("password").style.borderColor  = "red";
-                    document.getElementById("password2").style.borderColor  = "red";
-                    document.getElementById("Label_password").innerHTML = "Passwords - dosen't match";
-                    document.getElementById("Label_password").style.color  = "red";  
-                 }
-                 else if(this.state.status === 'fail'){
-                    document.getElementById("email").style.borderColor  = "red";
-                    document.getElementById("Label_email").innerHTML = "Email - this Email is already in use";
-                    document.getElementById("Label_email").style.color  = "red";  
-                    this.setState({err:{},isLoading: false,status:{}})      
-                }else{
+                 if(this.state.status === 'succsess'){
+                    this.setState({id: data.user._id,name:data.user.name,email:data.user.email,token:'token',login:true})
+                    sessionStorage.setItem("userData", JSON.stringify(this.state));         
+                    
+                    window.location.reload()
                     this.props.history.push('/');
-                }
+                 }        
             }
-        );   
+        ).catch((error) =>{
+            console.log(error);
+            document.getElementById("label_email").style.color  = "red";
+            document.getElementById("email").style.borderColor  = "red";
+            document.getElementById("note").style.visibility = "visible";
+            document.getElementById("label_password_login").style.color  = "red";
+            document.getElementById("password").style.borderColor  = "red";
+            
+        })  
+
+        
     }
 
     googleLogin(res,type){
+        console.log(res);
+
         let postData;
 
         if (type === 'google' && res.w3.U3) {
@@ -60,32 +79,30 @@ class Login extends React.Component {
             provider_pic: res.w3.Paa
         };
         }
+        sessionStorage.setItem("userData", JSON.stringify(postData));         
+        this.props.history.push('/report');
 
+        /**check this is no woorking right/ */
         if (postData) {
-            this.props.googleUserData('signup', postData).then((result) => {
-            let responseJson = result;
-            localStorage.setItem("userData", JSON.stringify(responseJson));
+            this.props.googleUserData('signup', postData).then(
+               (result) => {
+                    let responseJson = result;
+                    sessionStorage.setItem("userData", JSON.stringify(responseJson));         
+                    this.props.history.push('/report');
+                }
+            );
+        } else {
             
-            this.props.history.push('/');
-        });
-        } else {}
+        }
     }
 
 
    
 
-   handleLogin(e){
-       console.log('clicked!');
-   }
-
     render(){
-        if (this.state.redirect || sessionStorage.getItem('userData')) {
-            return (<Redirect to={'/Main'}/>)
-        }
+
 
         const responseGoogle = (response) => {
-            console.log("google console");
-            console.log(response);
             this.googleLogin(response, 'google');
         }
 
@@ -96,7 +113,7 @@ class Login extends React.Component {
                         <div className="card card-body">                       
                         <form  onSubmit={this.onSubmit}>
                             <div className="form-group">
-                            <label htmlFor="email">Email</label>
+                            <label id="label_email" htmlFor="email">Email</label>
                             <input
                                 value={this.state.email}
                                 onChange={this.onChange}
@@ -109,7 +126,7 @@ class Login extends React.Component {
                             />
                             </div>
                             <div className="form-group">
-                            <label htmlFor="password">Password</label>
+                            <label id="label_password_login" htmlFor="password">Password</label>
                             <input
                                 value={this.state.password}
                                 onChange={this.onChange}
@@ -131,6 +148,7 @@ class Login extends React.Component {
                         />
                         <p className="lead mt-4">
                             No Account? <a href="/Register">Register</a>
+                            <span id="note">Email or Password is incorect</span>
                         </p>
                         </div>
                     </div>
@@ -145,4 +163,4 @@ class Login extends React.Component {
  
 
 
-export default Login;
+export default withRouter(Login) ;

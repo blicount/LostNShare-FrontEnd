@@ -22,21 +22,20 @@ h1{
 }
 
 nav{
-   max-width: 300px;
+   max-width: 400px;
    width: 100%;
    display: flex;
    position: relative;
    justify-content: space-around;
    list-style: none;
    font-size: 18px;
-   left: 14%;
+   left:5%;
    top:55px;
-  
-   
 }
 
-nav a{width: 80px;
-   display: block;
+
+
+nav a{
    text-decoration: none;
    color: white;
 }
@@ -53,4 +52,14 @@ nav a:hover{
    top:1%;
    display: block;
 }
+
+
+.selected{
+   text-decoration: underline;
+}
+
+.inventory{}
+.report{}
+.register{}
+.login{}
 
