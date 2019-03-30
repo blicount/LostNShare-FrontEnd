@@ -55,7 +55,8 @@ class RegisterForm extends React.Component {
                 }else{
                     this.setState({login:true})
                     sessionStorage.setItem("userData", JSON.stringify(this.state));  
-                    this.props.history.push('/');
+                    window.location.assign('/')
+
                 }
             }
         ).catch((error) =>{
@@ -66,18 +67,24 @@ class RegisterForm extends React.Component {
 
     
     googleSignup(res, type) {
+        console.log(res);
+
         let postData;
 
         if (type === 'google' && res.w3.U3) {
-        postData = {
-            name: res.w3.ig,
-            provider: type,
-            email: res.w3.U3,
-            provider_id: res.El,
-            token: res.Zi.access_token,
-            provider_pic: res.w3.Paa
-        };
+            postData = {
+                name: res.w3.ig,
+                provider: type,
+                email: res.w3.U3,
+                provider_id: res.El,
+                token: res.Zi.access_token,
+                provider_pic: res.w3.Paa
+            };
+            this.setState({id: res.El,name:res.w3.ig,email:res.w3.U3,token:res.Zi.access_token,login:true})
         }
+        sessionStorage.setItem("userData", JSON.stringify(this.state));         
+        window.location.assign('/')
+
 
         if (postData) {
             this.props.googleUserData('signup', postData).then((result) => {

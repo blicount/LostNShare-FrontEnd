@@ -1,6 +1,4 @@
 import React from 'react';
-
-
 import { Link } from 'react-router-dom';
 import '../css/header.css'
 
@@ -38,12 +36,14 @@ class NavigationBar extends React.Component {
         return (
           <li key={index} className="menu__list-item">
               {linkMarkup }
+               {link.label !== 'report' && link.label !=='inventory' &&  link.label !=='login' && link.label !=='logout'? <i>  |</i>: ''}
+              
           </li>
       );
     });
     return (
         <nav >
-                 {linksMarkup}
+            {linksMarkup}
         </nav>
         
     );

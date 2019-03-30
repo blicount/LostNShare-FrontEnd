@@ -49,6 +49,11 @@
     margin-bottom: 15px;
     margin-top:25px;;
 }
+
+#side_bar span:nth-last-child(1){
+    height: 100px;;
+
+}
 /**/
 #search{
     max-width: 860px;
@@ -90,7 +95,8 @@
 }
 
 .view{
-    width: 80%;
+    max-width: 100px;;
+    width: 80% !important;
     height: 40px;
     position: relative;
     right:20%;
@@ -103,6 +109,15 @@
     right:20%;
 }
 
+hr{
+    width: 95%;
+    display: block;
+    position: absolute;
+    top: 5%;   
+    border-style: inset;
+    border-width: 1px;
+}
+
 /**/
 main{
     max-height: 825px;
@@ -112,45 +127,79 @@ main{
 #container{
     max-width: 880px;
     width: 100%;
-    max-height: 740px;
+    max-height: 780px;
     height: 100%;
     overflow: hidden;
 }
 
-.page_nav{
-    margin: auto;
-    display: block;
-    position: relative;
-    left: 40%;
-    margin-top: 20px;
-}
-
-.item{
-    width: 180px;
-    height: 230px;
+.inventory_item{
+    width: 32%;
+    height: 250px;
     display: inline-block;
-    margin-bottom: 25px;
-    margin-right: 40px;  
-
-    border:1px solid rgb(85, 85, 85);
+    border:0.5px solid rgb(223, 223, 223);
+    background-color: white;
 }
 
 .item_title{
-    width: 180px;
+    max-width: 80%;
+    width: 100%;
     height: 30px;
     position: relative;
-    bottom: 0%;
-    margin-left: 10px;
+    bottom:-75%;
+    display: block;
+    overflow-x: hidden;
+    color:black;
+    margin: auto;
+    
+}
+
+.item_title:hover{
+    color: rgb(89, 89, 165);
+}
+
+.item_description{
+    max-width: 80%;
+    width: 100%;
+    height: 30px;
+    position: relative;
+    bottom:-75%;
+    margin-left: 30px;
+    display: block;
+    overflow-x: hidden;
+    font-style: italic;
+
+    color: rgb(212, 212, 212);
     
 }
 
 .item_img{
-    width: 180px;
-    height: 180px;
-    margin-bottom: 10px;
+    max-width: 150px;
+    width: 100%;
+    width: auto;
+    height: auto;
+    vertical-align:middle;
+    position: absolute;
+    margin-left: 6%;
+    text-align: center;
+    margin-top: 2%;
+    border:1px solid rgb(184, 184, 184);
+    
 }
 
 .p_id{
     position: absolute;
     font-size: 50px;
+}
+
+.pages{
+    max-width: 880px;;
+    width: 100%;
+    top: 10%;
+    margin-left: 40%;
+}
+
+.page_link{
+    margin-left: 25px;
+
+    padding-bottom: 100px;
 }

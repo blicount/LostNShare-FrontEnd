@@ -1,20 +1,22 @@
 import React from 'react';
-import "../../css/profile.css"
+import {withRouter} from 'react-router-dom';
+
+import "../../../../css/profile.css"
 
 class ProfileNav extends React.Component{
 	constructor(props){
 		super(props);
         this.state = {
-            category:[],
-            sub_category:[],
-            date_to:'',
-            date_until:'',
-            location:''
+
 
         }
     }
     
-	componentWillMount(){
+    componentWillMount(){
+
+    }
+
+	
 /*
         fetch('https://lost-and-share.herokuapp.com/Categories/getAllCategories')         
         .then((Response)=>Response.json())
@@ -33,20 +35,29 @@ class ProfileNav extends React.Component{
                 }
             ); 
 	*/	
-    }
+    
     
 
 	render(){
+        let linksMarkup = this.props.links.map((link, index) => {
+            let linkMarkup = link.active ? (
+                <p  className="selected">{link.label}</p>
+              ) : (
+                  <p  className="">{link.label}</p>
+              );    
+              return (
+                <span onClick={this.props.handleClickSelection} key={index} className="menu__list-item">
+                    {linkMarkup }
+                </span>
+            );
+          });
 		return(
 				<div id="profile_nav">
-                        <li><a href="/">General</a></li>
-                        <li><a href="/">Inbox</a></li>
-                        <li><a href="/">My Items</a></li>
-                        <li><a href="/">Report List</a></li>
-                        <li><a href="/">Options</a></li>                  
+                     {linksMarkup}                  
 				</div>
+                
 			);
 		}
 	}
-export default ProfileNav;
+export default withRouter( ProfileNav);
 

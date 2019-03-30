@@ -1,11 +1,10 @@
 import React from 'react';
 import {connect} from 'react-redux'
+import {withRouter} from 'react-router-dom';
 import {userReportRequest} from '../../actions/formActions'
-//import {Redirect} from 'react-router-dom';
 import  ReportForm from '../Forms/ReportFrom'
-import "../../css/bootstrap.min.css"
-//import LoginPage from './LoginPage';
 import Massage from '../Objects/Massage'
+import "../../css/bootstrap.min.css"
 
 class RegisterPage extends React.Component { 
     constructor(props) {
@@ -32,4 +31,4 @@ class RegisterPage extends React.Component {
 
 
 
-export default connect(null,{userReportRequest} ) (RegisterPage);
+export default withRouter(connect(null,{userReportRequest} )  (RegisterPage));

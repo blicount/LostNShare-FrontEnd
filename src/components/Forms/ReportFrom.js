@@ -14,6 +14,8 @@ class ReportForm extends React.Component {
             description:'',
             file:'',
             image:'',
+            item_state:'lost',
+            location:'test',
             imagePreviewUrl:'',
             selected_category:'',
             selected_sub_category:'',
@@ -34,9 +36,27 @@ class ReportForm extends React.Component {
         .then((Response)=>Response.json())
         .then((data)=>{
                     //console.log(data);
-                    this.setState({category:data})
+                    this.setState({category:data,selected_category:data[0]._id})
+                    fetch('https://lost-and-share.herokuapp.com/subcategories/getAllSubCategoryByCategory/'+ data[0].name )         
+                    .then((Response)=>Response.json())
+                    .then((data)=>{                 
+                                this.setState({
+                                    sub_category:data.subcategorylist,
+                                    selected_sub_category:data.subcategorylist[0]
+                                })
+                                data.subcategorylist.map( (sub_cat, i) => {
+                                    var op = document.createElement("option");
+                                    var textnode = document.createTextNode(sub_cat); 
+                                    op.className = 'sub_category';
+                                    op.key = i;
+                                    op.appendChild(textnode);
+                                    document.getElementById('subCategory').appendChild(op);
+                                    return(null);        
+                                })    
+                    }).catch((error) => (console.log(error))); 
                 }
             ); 
+
        /* fetch('https://lost-and-share.herokuapp.com/location')         
         .then((Response)=>Response.json())
         .then((data)=>{
@@ -48,9 +68,9 @@ class ReportForm extends React.Component {
 
     onChangeCategory(e){
         var index = e.target.selectedIndex
-        var selectedCategory = this.state.category[index-1].name
+        var selectedCategory = this.state.category[index].name
         document.getElementById('subCategory').innerHTML = '';
-        this.setState({selected_category:this.state.category[index-1].name})
+        this.setState({selected_category:this.state.category[index].name})
         fetch('https://lost-and-share.herokuapp.com/subcategories/getAllSubCategoryByCategory/'+ selectedCategory )         
         .then((Response)=>Response.json())
         .then((data)=>{                 
@@ -84,14 +104,17 @@ class ReportForm extends React.Component {
     fileSelectedHandler(e){
         e.preventDefault();
         if (!e.target.files[0].type.match(/image.*/)) {
-            console.log("this is not an image");
+            //console.log("this is not an image");
             return;
         };
         const fd = new FormData();
+        console.log(e.target.files[0])
+        console.log(e.target.files[0].name)
+
         fd.append('image',e.target.files[0],e.target.files[0].name)
-        this.setState({ image:fd})
+        this.setState({ image:e.target.files[0]})
         
-        console.log(e.target.files[0]);
+        console.log(fd);
         let reader = new FileReader();
         let file = e.target.files[0];
     
@@ -107,26 +130,39 @@ class ReportForm extends React.Component {
 
     onSubmit(e){
         e.preventDefault();
-       
+
+        var user = JSON.parse(sessionStorage.getItem('userData'));
+        var itemData = {
+            email       : user.email,
+            itemtype    : this.state.item_state,
+            title       : this.state.title,
+            category    : this.state.selected_category,
+            subcategory : this.state.selected_sub_category,
+            ItemImage   : this.state.image,
+            location    : this.state.location,
+            desc        : this.state.description,
+        }
+
+        console.log(itemData)
+
+        const fd = new FormData();
+        fd.append('ItemImage',this.state.image,'plaeholder')
+        fd.append("email",user.email)
+        fd.append("itemtype", this.state.item_state)
+        fd.append("title",this.state.title)
+        fd.append("category",this.state.selected_category)
+        fd.append("subcategory",this.state.selected_sub_category)
+        fd.append("location",this.state.location)
 
 
-        this.props.userReportRequest(this.state).then(            
+        console.log(fd)
+
+
+        this.props.userReportRequest(fd).then(            
             ({ data }) =>{
-                 this.setState({err:data.err,isLoading: false,status:data.status})
-                 if(this.state.title === null || this.state.description === null){
-                    
-                    document.getElementById("password2").style.borderColor  = "red";
-                    document.getElementById("Label_password").innerHTML = "Passwords - dosen't match";
-                    document.getElementById("Label_password").style.color  = "red";  
-                 }
-                 else if(this.state.status === 'fail'){
-                    document.getElementById("email").style.borderColor  = "red";
-                    document.getElementById("Label_email").innerHTML = "Email - this Email is already in use";
-                    document.getElementById("Label_email").style.color  = "red";  
-                    this.setState({err:{},isLoading: false,status:{}})      
-                }else{
-                    this.props.history.push('/');
-                }
+
+                    this.props.history.push('/inventory/pages?page=1');
+                    console.log(data)
             }
         ).catch((error) =>{
             console.log(error);
@@ -151,7 +187,7 @@ class ReportForm extends React.Component {
                     <div className="col-md-6 m-auto">
                         <div className="card card-body report-card"> 
                         <h3>Item Information</h3>                      
-                        <form  onSubmit={this.onSubmit}>
+                        <form  onSubmit={this.onSubmit} encType="multipart/form-data">
                             <div className="form-group">
                             <label htmlFor="title">Tilte</label>
                             <input
@@ -182,22 +218,24 @@ class ReportForm extends React.Component {
                             </div>
                             <div className="form-group">
                             <label htmlFor="state">Item State:</label>
-                            <input type="radio"   checked
-                                value={this.state.itemstate}
+                            <input type="radio"   
+                                checked={this.state.item_state === 'Lost'} 
+                                value="lost"
                                 onChange={this.onChange}
-                                id="itemstate"
-                                name="itemstate"
+                                id="item_state"
+                                name="item_state"
                                 className="radio"
                                 
-                            /> Lost
+                            /> lost
                             <input type="radio"  
-                                value={this.state.itemstate}
+                                checked={this.state.item_state === 'Found'} 
+                                value="found"
                                 onChange={this.onChange}
-                                id="itemstate"
-                                name="itemstate"
+                                id="item_state"
+                                name="item_state"
                                 className="radio"
 
-                            /> Found
+                            /> found
                             </div>
                             <div className="form-group upload_photo ">
                             <label htmlFor="file-upload" className="custom-file-upload">
@@ -208,9 +246,8 @@ class ReportForm extends React.Component {
                             </div>
 
                             <div className="form-group">
-                            <label className="select" htmlFor="catagory">Catagory</label>
+                            <label id="category_select" className="select" htmlFor="catagory">Catagory</label>
                             <select required className="form-control-report form-control" onChange={this.onChangeCategory}>
-                                <option  value="blank" >...</option>
                                 { 
                                     this.state.category.map( (cat, i) => {
                                     return (
@@ -219,7 +256,7 @@ class ReportForm extends React.Component {
                                     })
                                 }
                             </select>
-                            <label  className="select" htmlFor="subcatagory">Sub Catagory</label>
+                            <label  id="sub_category_select" className="select" htmlFor="subcatagory">Sub Catagory</label>
                             <select required id="subCategory" className="form-control-report form-control"
                                  onChange={this.onChangeSubCategory}>
                             </select>

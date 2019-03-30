@@ -3,14 +3,12 @@ main{
     height: 100%;
     align-items: center;
     display: block;
-    margin: auto;
   
 }
 
 section{
     width: 100%;
     display:block;
-    margin: auto;
     background-color: #d4e3fc;
 }
 
@@ -26,7 +24,7 @@ h4{
 }
 
 main section:nth-child(2){
-     height: 200px;
+     height: 300px;
 }
 
 main section:nth-child(4){
@@ -40,16 +38,21 @@ main section:nth-child(4){
 #most_popular article{
     max-width: 850px;
     width: 100%;
-    margin: auto;
 }
 
 
 #most_recent{     
-    margin-top: 10px;
 }
 
 #most_recent article{
-    max-width: 850px;
+    max-width: 1000px;
     width: 100%;
-    margin: auto;
+    margin-left:15%;
 }
+
+#most_recent article div span{
+    margin-top:20px;
+   
+}
+
+

@@ -7,3 +7,9 @@ import axios from 'axios';
   }
 }
 
+export function getUserData(user_email) {
+   return dispatch =>{
+      axios.get('https://lost-and-share.herokuapp.com/userdetails/' +user_email)
+   }
+ }
+ 

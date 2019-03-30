@@ -6,9 +6,11 @@ export function userRegisterRequest(userData) {
    }
 }
 
-export function userReportRequest(itemData) {
+export function userReportRequest(form_data) {
   return dispatch => {
-    return axios.post('https://lost-and-share.herokuapp.com/users/report', itemData);
+
+    
+    return axios.post('https://lost-and-share.herokuapp.com/items/createItem', form_data);
   }
 }
 

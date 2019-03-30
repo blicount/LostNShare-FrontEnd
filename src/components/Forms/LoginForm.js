@@ -45,10 +45,8 @@ class Login extends React.Component {
                  this.setState({err:data.err,isLoading: false,status:data.status})
                  if(this.state.status === 'succsess'){
                     this.setState({id: data.user._id,name:data.user.name,email:data.user.email,token:'token',login:true})
-                    sessionStorage.setItem("userData", JSON.stringify(this.state));         
-                    
-                    window.location.reload()
-                    this.props.history.push('/');
+                    sessionStorage.setItem("userData", JSON.stringify(this.state));                       
+                    window.location.assign('/')            
                  }        
             }
         ).catch((error) =>{
@@ -70,17 +68,18 @@ class Login extends React.Component {
         let postData;
 
         if (type === 'google' && res.w3.U3) {
-        postData = {
-            name: res.w3.ig,
-            provider: type,
-            email: res.w3.U3,
-            provider_id: res.El,
-            token: res.Zi.access_token,
-            provider_pic: res.w3.Paa
-        };
+            postData = {
+                name: res.w3.ig,
+                provider: type,
+                email: res.w3.U3,
+                provider_id: res.El,
+                token: res.Zi.access_token,
+                provider_pic: res.w3.Paa
+            };
+            this.setState({id: res.El,name:res.w3.ig,email:res.w3.U3,token:res.Zi.access_token,login:true})
         }
-        sessionStorage.setItem("userData", JSON.stringify(postData));         
-        this.props.history.push('/report');
+        sessionStorage.setItem("userData", JSON.stringify(this.state));         
+        window.location.assign('/')
 
         /**check this is no woorking right/ */
         if (postData) {
@@ -88,7 +87,7 @@ class Login extends React.Component {
                (result) => {
                     let responseJson = result;
                     sessionStorage.setItem("userData", JSON.stringify(responseJson));         
-                    this.props.history.push('/report');
+                    this.props.history.push('/');
                 }
             );
         } else {

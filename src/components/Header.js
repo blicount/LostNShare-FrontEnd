@@ -24,16 +24,18 @@ class Header extends React.Component {
        
         if (sessionStorage.getItem('userData') == null) {
             this.setState({links:[
-                { label: 'inventory', link: '/inventory', active: false },
+                { label: 'inventory', link: '/inventory/pages?page=1', active: false },
                 { label: 'report', link: '/report' ,active: false},
                 { label: 'register', link: '/register' ,active: false},
                 { label: 'login', link: '/login' ,active: false}
             ]})
         }else{
+            var user_id = JSON.parse(sessionStorage.getItem('userData')).id;
+            
             this.setState({links:[
-                { label: 'inventory', link: '/inventory', active: false },
+                { label: 'inventory', link: '/inventory/pages?page=1', active: false },
                 { label: 'report', link: '/report' ,active: false},
-                { label: name.name, link: '/profile' ,active: false},
+                { label: name.name, link: '/profile/' +user_id +'/' ,active: false},
                 { label: 'logout', link: '/' ,active: false},
             ]})
         }
@@ -43,11 +45,11 @@ class Header extends React.Component {
 
     handleClickSelection(e){
 
-        console.log(e.target.text)
+        //console.log(e.target.text)
         if(e.target.text === 'logout'){
             sessionStorage.removeItem('userData');
             window.location.reload()
-                }
+        }
 
 
         this.state.links.forEach(element => {

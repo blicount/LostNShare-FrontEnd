@@ -1,4 +1,8 @@
 
+/*profile page*/
+
+.profile_page{
+}
 
 
 /*side nav profile*/
@@ -7,14 +11,11 @@
     max-width: 300px;
     height: 600px;
     width: 100%; 
+    float: left;
     background-color:  rgba(140, 177, 252, 0.5);
 }
 
-#profile_nav {
-    width: 100%;
-} 
-
-#profile_nav li{
+#profile_nav span{
     display: block;
     font-size: 20px;
     padding: 20px;
@@ -22,16 +23,42 @@
     
 } 
 
-#profile_nav li:hover{
+#profile_nav span:hover{
     background-color: rgb(40, 44, 52,0.9) ;
     color: white;
     transition: background-color 0.5s ease-in-out;
     cursor: pointer;
 } 
 
-#profile_nav li a{
+#profile_nav span a{
     margin-left: 20%;
     font-size: 20px;
     
 } 
 
+/* profile container */
+
+.profile_container{
+    max-width: 1000px;
+    width: 100%;
+    display: block;
+    position: relative;
+    left:1%;
+    
+}
+
+.visible{
+    visibility: visible;
+    display: block;
+}
+
+.hidden{
+    display: none;
+    visibility: hidden;
+}
+
+.container{
+    width: 500px;
+    position: relative;
+    right:12%;
+}

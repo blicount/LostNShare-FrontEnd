@@ -1,5 +1,5 @@
 import React from 'react';
-import "../../css/inventory_page.css"
+import "../../../../css/inventory_page.css"
 
 class Serach extends React.Component{
 	constructor(props){
@@ -35,6 +35,7 @@ class Serach extends React.Component{
                               <option>Top match</option>
                         </select>
                     </span>
+                    <hr></hr>
 				</span>    
 			);
 		}
