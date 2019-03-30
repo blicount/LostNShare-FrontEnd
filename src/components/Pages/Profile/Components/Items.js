@@ -19,7 +19,7 @@ class Items extends React.Component{
 		var user = JSON.parse(sessionStorage.getItem('userData'));
 
 
-		axios.get('https://lost-and-share.herokuapp.com/items/getItemByOwner',{ headers: { email: user.email }})         
+		axios.get('https://lost-and-share.herokuapp.com/items/getItemByOwner',{ header: { email: user.email }})         
 			
 				.then((data)=>{
 							console.log(data);

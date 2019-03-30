@@ -14,7 +14,7 @@ class ItemPage extends React.Component {
         var ids = url_string.lastIndexOf('/');
         ids = url_string.substr(ids+1);
 
-        axios.get('https://lost-and-share.herokuapp.com/items/getItemById',{ headers: { id: ids }})         
+        axios.get('https://lost-and-share.herokuapp.com/items/getItemById',{ header: { id: ids }})         
         .then((data)=>{
             console.log(data);
 
