@@ -1,8 +1,9 @@
 import React from 'react';
-//import axios from 'axios';
+import axios from 'axios';
 
 import Item from './Item'
 import "../../../../css/inventory_page.css"
+
 class Container extends React.Component{
 	constructor(props){
 		super(props);
@@ -18,8 +19,7 @@ class Container extends React.Component{
 
 	 componentWillMount(){
 		
-		fetch('https://lost-and-share.herokuapp.com/items/getAll' +this.state.cuerrent_state+ 'Items/')         
-        .then((response)=>response.json())
+		axios.get('https://lost-and-share.herokuapp.com/items/getAllActive' +this.state.cuerrent_state+ 'Items')         
         .then((data)=>{
 			console.log(data);
 			var url_string = window.location.href;		
@@ -27,11 +27,15 @@ class Container extends React.Component{
 			var page = url.searchParams.get("page");
 			//console.log(page);
 			this.setState({
-				items:data,
-				current_display_items:data.slice(page === 1 ? 0 : (page-1) * 9,(page) * 9),
-				pages:(Math.floor(data.length/9) +1),
+				items:data.data,
+				current_display_items:data.data.slice(page === 1 ? 0 : (page-1) * 9,(page) * 9),
+				pages:(Math.floor(data.data.length/9) +1),
 			})
-		});
+		}).catch((error) =>{
+			console.log(error);
+
+			
+	});
 
     }
 

@@ -28,7 +28,7 @@ class SideBar extends React.Component{
             this.setState({selected_category:state.selected_category,selected_sub_category:state.selected_sub_category  })
         }
 
-        axios('https://lost-and-share.herokuapp.com/Categories/getAllCategories')         
+        axios.get('https://lost-and-share.herokuapp.com/Categories/getAllCategories')         
         .then((data)=>{
                     //console.log(data);
                     this.setState({category:data.data})

@@ -99,11 +99,14 @@ class ProfilePage extends React.Component{
         }else{
             return(
                 <div className="profile_page">
-                    <ProfileNav     links={this.state.links} handleClickSelection={this.handleClickSelection}/>
-                    <General        isVisible={this.state.links[0].active ? 'visible' : 'hidden'}/>
-                    <Items          isVisible={this.state.links[1].active ? 'visible' : 'hidden'}/>
-                    <Matching       isVisible={this.state.links[2].active ? 'visible' : 'hidden'}/>
-
+                    <div>
+                        <ProfileNav     links={this.state.links} handleClickSelection={this.handleClickSelection}/>
+                    </div>
+                    <div id="profile_container">
+                        <General        isVisible={this.state.links[0].active ? 'visible' : 'hidden'}/>
+                        <Items          isVisible={this.state.links[1].active ? 'visible' : 'hidden'}/>
+                        <Matching       isVisible={this.state.links[2].active ? 'visible' : 'hidden'}/>
+                    </div>
                 </div>
                 );
         }

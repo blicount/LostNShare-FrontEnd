@@ -2,21 +2,24 @@
 /*profile page*/
 
 .profile_page{
+    display: flex;
 }
 
 
 /*side nav profile*/
 
 #profile_nav{
-    max-width: 300px;
+    max-width: 300px ;
     height: 600px;
-    width: 100%; 
-    float: left;
+    width: 100%;
+    display: block; 
+    position: relative;
     background-color:  rgba(140, 177, 252, 0.5);
 }
 
 #profile_nav span{
     display: block;
+    min-width: 300px;
     font-size: 20px;
     padding: 20px;
     border-bottom: 1px solid white;
@@ -38,14 +41,94 @@
 
 /* profile container */
 
-.profile_container{
-    max-width: 1000px;
+
+
+#profile_container{
+    max-width: 880px !important;
     width: 100%;
+
+    height: 100%;
+
+    margin-top: 2%;
     display: block;
-    position: relative;
-    left:1%;
+    margin-left: 5%;
+    left: 15%;
     
 }
+
+.pofile_item{
+    width: 100%;
+    height: 250px;
+    display: inline-block;
+    border:0.5px solid rgb(223, 223, 223);
+    background-color: white;
+}
+
+.pofile_item:nth-last-child(1){
+    margin-bottom: 50px;
+}
+
+.pofile_item_title{
+    max-width: 80%;
+    width: 100%;
+    height: 30px;
+    position: relative;
+    display: block;
+    overflow-x: hidden;
+    color:black;
+    margin-top: 20px;
+    margin-left: 25%;
+    
+}
+
+.pofile_item_title:hover{
+    color: rgb(89, 89, 165);
+}
+
+.pofile_item_description{
+    max-width: 80%;
+    width: 100%;
+    height: 30px;
+    margin-top: 50px;
+    margin-left: 25%;
+    position: relative;
+    display: block;
+    overflow-x: hidden;
+    font-style: italic;
+    color: rgb(212, 212, 212);
+    
+}
+
+.pofile_item_img{
+    max-width: 150px !important;
+    width: 100%;
+    width: auto;
+    height: auto;
+    vertical-align:middle;
+    position: absolute;
+    margin-left: 6%;
+    text-align: center;
+    margin-top: 2%;
+    border:1px solid rgb(184, 184, 184);
+    
+}
+
+.pofile_item button{
+    position: relative;
+    display: block;
+    margin-top: 25px;
+    width: 100%;
+    max-width: 150px;
+    left: 80%;
+}
+
+
+.p_id{
+    position: absolute;
+    font-size: 50px;
+}
+
+
 
 .visible{
     visibility: visible;

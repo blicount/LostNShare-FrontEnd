@@ -2,7 +2,7 @@ import React from 'react';
 import Massage      from '../../../Objects/Massage';
 import {withRouter} from 'react-router-dom';
 import axios from 'axios';
-
+import '../../../../css/profile.css'
 
 class Items extends React.Component{
 	constructor(props){
@@ -17,19 +17,18 @@ class Items extends React.Component{
 		
 
 		var user = JSON.parse(sessionStorage.getItem('userData'));
+		console.log(user.email)
 
+		axios.post('https://lost-and-share.herokuapp.com/items/getItemByOwner', user )         
+			.then((data)=>{
+						console.log(data);
+						this.setState({owner_items:data.data})}
+			)
+			.catch((error) =>{
+					console.log(error);
 
-		axios.get('https://lost-and-share.herokuapp.com/items/getItemByOwner',{ header: { email: user.email }})         
-			
-				.then((data)=>{
-							console.log(data);
-							this.setState({owner_items:data.data})}
-				)
-				.catch((error) =>{
-						console.log(error);
-
-						
-				})
+					
+			})
 	}
 
  
@@ -40,14 +39,16 @@ class Items extends React.Component{
 			return (<Massage/>)
 		}
 		return(
-			<div className={this.props.isVisible}	>
+			<div className={this.props.isVisible} 	>
             { 
                 this.state.owner_items.map( (item, i) => {
                             //console.log(item._id);
                             return (
-                                <span className="item" key={i}>
-                                    <img alt="pic" className="item_img" src={item.picpath} />
-                                    <a className="item_title" href={item.title}  key={i}>{item.title}</a>
+                                <span className="pofile_item" key={i}>
+                                    <img alt="pic" className="pofile_item_img" src={item.picpath} />
+                                    <a className="pofile_item_title" href={item.title}  key={i}>{item.title}</a>
+									<button>Update</button>
+									<button>Remove</button>
                                 </span>
                             )
                 })

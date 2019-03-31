@@ -48,6 +48,7 @@ class Header extends React.Component {
         //console.log(e.target.text)
         if(e.target.text === 'logout'){
             sessionStorage.removeItem('userData');
+            localStorage.removeItem('PrevSideBarState');
             window.location.reload()
         }
 
