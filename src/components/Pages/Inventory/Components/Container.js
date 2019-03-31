@@ -19,7 +19,7 @@ class Container extends React.Component{
 	 componentWillMount(){
 		
 		fetch('https://lost-and-share.herokuapp.com/items/getAll' +this.state.cuerrent_state+ 'Items/')         
-        .then((Response)=>Response.json())
+        .then((response)=>response.json())
         .then((data)=>{
 			console.log(data);
 			var url_string = window.location.href;		

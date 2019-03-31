@@ -1,5 +1,6 @@
 import React from 'react';
 import "../../../../css/inventory_page.css"
+import axios from 'axios';
 
 class SideBar extends React.Component{
 	constructor(props){
@@ -20,15 +21,17 @@ class SideBar extends React.Component{
     }
     
     componentWillMount(){
-        var state = JSON.parse(localStorage.getItem('PrevSideBarState'))
-        console.log("old state")
-        console.log(state.selected_category)
-        this.setState({selected_category:state.selected_category,selected_sub_category:state.selected_sub_category  })
-        fetch('https://lost-and-share.herokuapp.com/Categories/getAllCategories')         
-        .then((Response)=>Response.json())
+        if(localStorage.getItem('PrevSideBarState') !== null){
+            var state = JSON.parse(localStorage.getItem('PrevSideBarState'))
+            console.log("old state")
+            console.log(state.selected_category)
+            this.setState({selected_category:state.selected_category,selected_sub_category:state.selected_sub_category  })
+        }
+
+        axios('https://lost-and-share.herokuapp.com/Categories/getAllCategories')         
         .then((data)=>{
                     //console.log(data);
-                    this.setState({category:data})
+                    this.setState({category:data.data})
                 }
             ); 
        /* fetch('https://lost-and-share.herokuapp.com/location')         
@@ -48,14 +51,15 @@ class SideBar extends React.Component{
         var selectedCategory = this.state.category[index-1].name
         document.getElementById('subCategory').innerHTML = '';
         this.setState({selected_category:this.state.category[index-1].name})
-        fetch('https://lost-and-share.herokuapp.com/subcategories/getAllSubCategoryByCategory/'+ selectedCategory )         
-        .then((Response)=>Response.json())
-        .then((data)=>{                 
+        axios.get('https://lost-and-share.herokuapp.com/subcategories/getAllSubCategoryByCategory/'+ selectedCategory )         
+        .then((response)=>response)
+        .then((data)=>{   
+                console.log(data.data.subcategorylist[0])              
                     this.setState({
-                        sub_category:data.subcategorylist,
-                        selected_sub_category:data.subcategorylist[0]
+                        sub_category:data.data.subcategorylist,
+                        selected_sub_category:data.data.subcategorylist[0]         
                     })
-                    data.subcategorylist.map( (sub_cat, i) => {
+                    data.data.subcategorylist.map( (sub_cat, i) => {
                         var op = document.createElement("option");
                         var textnode = document.createTextNode(sub_cat); 
                         op.className = 'sub_category';
