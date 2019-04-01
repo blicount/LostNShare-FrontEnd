@@ -24,7 +24,7 @@ class General extends React.Component{
 	
 	onSubmit(e){
         e.preventDefault();
-       
+       /*
         this.props.userRegisterRequest(this.state).then(            
             ({ data }) =>{
                 console.log(data);
@@ -50,7 +50,8 @@ class General extends React.Component{
         ).catch((error) =>{
             console.log(error);
             
-        });   
+		});
+		*/   
     }
 
 	render(){
@@ -91,7 +92,7 @@ class General extends React.Component{
 								<div className="form-group">
 								<label id="label_password" htmlFor="password_confirm_1">Password</label>
 								<input
-									value={this.state.password_confirm_1}
+									
 									onChange={this.onChange}
 									type="password_confirm_1"
 									id="password_confirm_1"
@@ -104,7 +105,7 @@ class General extends React.Component{
 								<div className="form-group">
 								<label id="label_password" htmlFor="password_confirm_2">Confirm Password</label>
 								<input
-									value={this.state.password_confirm_2}
+									
 									onChange={this.onChange}
 									type="password"
 									id="password_confirm_2"
@@ -117,7 +118,7 @@ class General extends React.Component{
 								<div className="form-group">
 								<label htmlFor="password2">New Password</label>
 								<input
-									value={this.state.new_password}
+									
 									onChange={this.onChange}
 									type="password"
 									id="new_password"
