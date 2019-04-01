@@ -4,6 +4,7 @@ import {withRouter} from 'react-router-dom';
 //import {Redirect} from 'react-router-dom';
 import "../../css/report.css";
 import "../../css/bootstrap.min.css"
+import axios from 'axios';
 //import LoginPage from '../Pages/LoginPage';
 
 class ReportForm extends React.Component {
@@ -32,19 +33,18 @@ class ReportForm extends React.Component {
 
 
     componentWillMount(){
-        fetch('https://lost-and-share.herokuapp.com/Categories/getAllCategories')         
-        .then((Response)=>Response.json())
+        axios.get('https://lost-and-share.herokuapp.com/Categories/getAllCategories')         
         .then((data)=>{
-                    //console.log(data);
-                    this.setState({category:data,selected_category:data[0]._id})
-                    fetch('https://lost-and-share.herokuapp.com/subcategories/getAllSubCategoryByCategory/'+ data[0].name )         
-                    .then((Response)=>Response.json())
-                    .then((data)=>{                 
+                    this.setState({category:data.data,selected_category:data.data[0]._id})
+                    axios.post('https://lost-and-share.herokuapp.com/subcategories/getAllSubCategoryByCategory', {category:data.data[0].name} )         
+                    .then((data)=>{ 
+                        console.log(data);
+                
                                 this.setState({
-                                    sub_category:data.subcategorylist,
-                                    selected_sub_category:data.subcategorylist[0]
+                                    sub_category:data.data.subcategorylist,
+                                    selected_sub_category:data.data.subcategorylist[0]
                                 })
-                                data.subcategorylist.map( (sub_cat, i) => {
+                                data.data.subcategorylist.map( (sub_cat, i) => {
                                     var op = document.createElement("option");
                                     var textnode = document.createTextNode(sub_cat); 
                                     op.className = 'sub_category';
@@ -71,14 +71,14 @@ class ReportForm extends React.Component {
         var selectedCategory = this.state.category[index].name
         document.getElementById('subCategory').innerHTML = '';
         this.setState({selected_category:this.state.category[index].name})
-        fetch('https://lost-and-share.herokuapp.com/subcategories/getAllSubCategoryByCategory/'+ selectedCategory )         
-        .then((Response)=>Response.json())
-        .then((data)=>{                 
+        axios.post('https://lost-and-share.herokuapp.com/subcategories/getAllSubCategoryByCategory', {category:this.state.category[index].name})         
+        .then((data)=>{           
+            console.log(data.data)      
                     this.setState({
-                        sub_category:data.subcategorylist,
-                        selected_sub_category:data.subcategorylist[0]
+                        sub_category:data.data.subcategorylist,
+                        selected_sub_category:data.data.subcategorylist[0]
                     })
-                    data.subcategorylist.map( (sub_cat, i) => {
+                    data.data.subcategorylist.map( (sub_cat, i) => {
                         var op = document.createElement("option");
                         var textnode = document.createTextNode(sub_cat); 
                         op.className = 'sub_category';

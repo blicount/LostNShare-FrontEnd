@@ -1,6 +1,7 @@
 import React  from 'react';
 import "../css/main.css"
 import Item from './Pages/Inventory/Components/Item'
+import axios from 'axios';
 
 class Main extends React.Component {
 	constructor(props){
@@ -14,13 +15,12 @@ class Main extends React.Component {
 	}
 	componentWillMount(){
 
-		fetch('https://lost-and-share.herokuapp.com/items/getAll' +this.state.cuerrent_state+ 'Items/')         
-        .then((Response)=>Response.json())
+		axios.get('https://lost-and-share.herokuapp.com/items/getAllActive' +this.state.cuerrent_state+ 'Items/')         
         .then((data)=>{
-			console.log(data);
+			console.log(data.data);
 			this.setState({
-				items:data,
-				current_display_items:data.slice(0,3),
+				items:data.data,
+				current_display_items:data.data.slice(0,3),
 				
 			})
 		});

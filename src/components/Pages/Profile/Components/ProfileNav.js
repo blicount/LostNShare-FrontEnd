@@ -10,11 +10,14 @@ class ProfileNav extends React.Component{
 
 
         }
+      
     }
     
     componentWillMount(){
 
     }
+
+
 
 	
 /*
@@ -36,7 +39,7 @@ class ProfileNav extends React.Component{
             ); 
 	*/	
     
-    
+
 
 	render(){
         let linksMarkup = this.props.links.map((link, index) => {
@@ -46,7 +49,7 @@ class ProfileNav extends React.Component{
                   <p  className="">{link.label}</p>
               );    
               return (
-                <span onClick={this.props.handleClickSelection} key={index} className="menu__list-item">
+                <span onClick={this.props.handleClickSelection} key={index} className="menu__list-item" >
                     {linkMarkup }
                 </span>
             );

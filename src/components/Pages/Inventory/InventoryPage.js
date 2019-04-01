@@ -13,6 +13,7 @@ class InventoryPage extends React.Component {
         
     }
     this.handleChangePageAndState = this.handleChangePageAndState.bind(this);
+
     }
 
 
@@ -20,6 +21,9 @@ class InventoryPage extends React.Component {
         //this.props.history.replaceState(page);
         
     }
+
+
+
 
     render(){
         /*if (sessionStorage.getItem('userData') == null) {
@@ -32,7 +36,7 @@ class InventoryPage extends React.Component {
             <div id="inventory">
                 <SideBar/>
                 <div >
-                    <SearchBar />
+                    <SearchBar   />
                     <Container handleChangePageAndState={this.handleChangePageAndState} />
                 </div>  
             </div>

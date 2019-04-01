@@ -31,6 +31,7 @@ class ProfilePage extends React.Component{
             mannager:false
 		 }
          this.handleClickSelection = this.handleClickSelection.bind(this);
+     
          
 	}
 
@@ -64,7 +65,12 @@ class ProfilePage extends React.Component{
 
             ]})
         }
+        window.addEventListener('scroll', this.listenScrollEvent);
 	}
+
+    componentWillUnmount() {
+        window.removeEventListener('scroll', this.listenScrollEvent);
+    }
 
     handleClickSelection(e){
         this.state.links.forEach(element => {
@@ -78,7 +84,14 @@ class ProfilePage extends React.Component{
         this.forceUpdate();
 	}
 	
-    
+    listenScrollEvent(){
+        if (window.scrollY > 100) {
+            document.getElementById("profile_nav").style.top = (window.scrollY-100)+'px';
+        }else{
+            document.getElementById("profile_nav").style.top = 0+'px';
+        }
+    }
+
 	render(){
 
 		if (sessionStorage.getItem('userData') == null) {
@@ -86,8 +99,8 @@ class ProfilePage extends React.Component{
         }
         if(this.state.mannager){
             return(
-                <div className="profile_page">
-                    <ProfileNav     links={this.state.links} handleClickSelection={this.handleClickSelection}/>
+                <div className="profile_page" onScroll={this.listenScrollEvent}>
+                    <ProfileNav     links={this.state.links} handleClickSelection={this.handleClickSelection} />
                     <General        isVisible={this.state.links[0].active ? 'visible' : 'hidden'} />
                     <Items          isVisible={this.state.links[1].active ? 'visible' : 'hidden'}/>                     
                     <Matching       isVisible={this.state.links[2].active ? 'visible' : 'hidden'}/>
@@ -98,11 +111,11 @@ class ProfilePage extends React.Component{
                 );
         }else{
             return(
-                <div className="profile_page">
-                    <div>
-                        <ProfileNav     links={this.state.links} handleClickSelection={this.handleClickSelection}/>
+                <div className="profile_page" onScroll={this.listenScrollEvent}> 
+                    <div >
+                        <ProfileNav     links={this.state.links} handleClickSelection={this.handleClickSelection}  />
                     </div>
-                    <div id="profile_container">
+                    <div className="profile_container">
                         <General        isVisible={this.state.links[0].active ? 'visible' : 'hidden'}/>
                         <Items          isVisible={this.state.links[1].active ? 'visible' : 'hidden'}/>
                         <Matching       isVisible={this.state.links[2].active ? 'visible' : 'hidden'}/>
