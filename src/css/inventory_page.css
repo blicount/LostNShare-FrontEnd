@@ -19,7 +19,7 @@
     max-width: 300px;
     height: 100%;
     width: 100%;
-    
+    position: relative;
     display: block;
     background-color:  rgba(140, 177, 252, 0.5);
 }
@@ -127,9 +127,8 @@ main{
 #container{
     max-width: 880px;
     width: 100%;
-    max-height: 780px;
     height: 100%;
-    overflow: hidden;
+    display:block;
 }
 
 .inventory_item{
@@ -139,6 +138,7 @@ main{
     border:0.5px solid rgb(223, 223, 223);
     background-color: white;
 }
+
 
 .item_title{
     max-width: 80%;
@@ -160,14 +160,13 @@ main{
 .item_description{
     max-width: 80%;
     width: 100%;
-    height: 30px;
+    height: 25px;
     position: relative;
     bottom:-75%;
     margin-left: 30px;
     display: block;
-    overflow-x: hidden;
     font-style: italic;
-
+    overflow: hidden;
     color: rgb(212, 212, 212);
     
 }

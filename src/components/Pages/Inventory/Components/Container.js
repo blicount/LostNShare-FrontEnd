@@ -28,8 +28,8 @@ class Container extends React.Component{
 			//console.log(page);
 			this.setState({
 				items:data.data,
-				current_display_items:data.data.slice(page === 1 ? 0 : (page-1) * 9,(page) * 9),
-				pages:(Math.floor(data.data.length/9) +1),
+				current_display_items:data.data/*.slice(page === 1 ? 0 : (page-1) * 9,(page) * 9)*/,
+				//pages:(Math.floor(data.data.length/9) +1),
 			})
 		}).catch((error) =>{
 			console.log(error);
@@ -58,19 +58,21 @@ class Container extends React.Component{
 	}
 
 	render(){
+		/*
 		let pages_number = [];
 		for (var i = 1; i <= this.state.pages; i++) {
 			pages_number.push(<i onClick={this.handlePageChange} className="page_link" key={i}>{i}</i>);
+							<span  className="pages" >
+					{pages_number}
+				</span>
 		}
-		
+		*/
 		return(
             <main>
 				<article id="container">
                     <Item current_display_items={this.state.current_display_items} handleClickSelection={this.handleClickSelection}/>
        			</article>
-				<span  className="pages" >
-					{pages_number}
-				</span>
+
             </main>   
 			);
 		}

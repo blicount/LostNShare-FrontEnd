@@ -16,13 +16,27 @@ class InventoryPage extends React.Component {
 
     }
 
+	componentDidMount(){
+        window.addEventListener('scroll', this.listenScrollEvent);
+	}
+
+    componentWillUnmount() {
+        window.removeEventListener('scroll', this.listenScrollEvent);
+    }
 
     handleChangePageAndState(page){
         //this.props.history.replaceState(page);
         
     }
 
-
+    listenScrollEvent(){
+        console.log("scroll")
+        if (window.scrollY > 100) {
+            document.getElementById("side_bar").style.top = (window.scrollY-100)+'px';
+        }else{
+            document.getElementById("side_bar").style.top = 0+'px';
+        }
+    }
 
 
     render(){
@@ -35,7 +49,7 @@ class InventoryPage extends React.Component {
           
             <div id="inventory">
                 <SideBar/>
-                <div >
+                <div onScroll={this.listenScrollEvent}>
                     <SearchBar   />
                     <Container handleChangePageAndState={this.handleChangePageAndState} />
                 </div>  

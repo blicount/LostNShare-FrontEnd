@@ -20,7 +20,7 @@ class Matching extends React.Component{
 		if (sessionStorage.getItem('userData') == null) {
 			return (<Massage/>)
 		}
-		console.log(this.props.isVisible)
+
 		return(
 			<div className={this.props.isVisible}>
 Matching

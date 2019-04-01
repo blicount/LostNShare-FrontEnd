@@ -24,7 +24,7 @@ class Header extends React.Component {
        
         if (sessionStorage.getItem('userData') == null) {
             this.setState({links:[
-                { label: 'inventory', link: '/inventory/pages?page=1', active: false },
+                { label: 'inventory', link: '/inventory', active: false },
                 { label: 'report', link: '/report' ,active: false},
                 { label: 'register', link: '/register' ,active: false},
                 { label: 'login', link: '/login' ,active: false}
@@ -33,7 +33,7 @@ class Header extends React.Component {
             var user_id = JSON.parse(sessionStorage.getItem('userData')).id;
             
             this.setState({links:[
-                { label: 'inventory', link: '/inventory/pages?page=1', active: false },
+                { label: 'inventory', link: '/inventory', active: false },
                 { label: 'report', link: '/report' ,active: false},
                 { label: name.name, link: '/profile/' +user_id +'/' ,active: false},
                 { label: 'logout', link: '/' ,active: false},
@@ -69,7 +69,7 @@ class Header extends React.Component {
         return (
             <header>
                 <span id="logo_nls">
-                   <a href="/" ><img alt="logo" src="./Images/logo_lns.png"/></a>
+                   <a href="/" ><img alt="logo" src="https://gdurl.com/Ss79"/></a>
                 </span>
                 <h1> LostNShare</h1>
                  <NavigationBar links={this.state.links} handleClickSelection={this.handleClickSelection}/>

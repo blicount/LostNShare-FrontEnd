@@ -86,7 +86,7 @@ class SideBar extends React.Component{
 
 	render(){
 		return(
-				<div id="side_bar">
+				<div id="side_bar" >
                      <span className="form-group">
                         <label className="select " htmlFor="search_state">State</label>
                         <select className="form-control" onChange={this.onChange} name="state" value={this.state.state}>

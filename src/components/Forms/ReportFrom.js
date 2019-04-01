@@ -153,6 +153,7 @@ class ReportForm extends React.Component {
         fd.append("category",this.state.selected_category)
         fd.append("subcategory",this.state.selected_sub_category)
         fd.append("location",this.state.location)
+        fd.append("desc",this.state.description)
 
 
         console.log(fd)
