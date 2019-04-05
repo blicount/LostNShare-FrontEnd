@@ -28,7 +28,8 @@ class ProfilePage extends React.Component{
 				{ label: 'User Mannage' ,active: false},
 				{ label: 'Item Mannage'	,active: false}
             ],
-            mannager:false
+            mannager:false,
+            visibleLink:'General'
 		 }
          this.handleClickSelection = this.handleClickSelection.bind(this);
      
@@ -65,6 +66,14 @@ class ProfilePage extends React.Component{
 
             ]})
         }
+        this.state.links.forEach(element => {
+            if(element.label === this.state.visibleLink){
+                element.active = true;
+            } else{
+
+                element.active = false 
+            }   
+        }); 
         window.addEventListener('scroll', this.listenScrollEvent);
 	}
 
@@ -76,6 +85,7 @@ class ProfilePage extends React.Component{
         this.state.links.forEach(element => {
             if(element.label === e.target.innerText){
                 element.active = true;
+                this.setState({visibleLink:element.label})
             } else{
 
                 element.active = false 

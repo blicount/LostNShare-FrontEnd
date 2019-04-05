@@ -2,12 +2,12 @@ import React from 'react';
 //import axios from 'axios';
 import {withRouter} from 'react-router-dom';
 //import {Redirect} from 'react-router-dom';
-import "../../css/report.css";
-import "../../css/bootstrap.min.css"
+//import "../../../../css/report.css";
+import "../../../../css/bootstrap.min.css"
 import axios from 'axios';
 //import LoginPage from '../Pages/LoginPage';
 
-class ReportForm extends React.Component {
+class UpdateItem extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -155,19 +155,12 @@ class ReportForm extends React.Component {
         fd.append("location",this.state.location)
         fd.append("desc",this.state.description)
 
-
-        console.log(fd)
-
-
         this.props.userReportRequest(fd).then(            
             ({ data }) =>{
-
-                    this.props.history.push('/inventory');
-                    console.log(data)
+                    window.location.reload();
             }
         ).catch((error) =>{
-            console.log(error);
-            
+            console.log(error);    
         });      
     }
 
@@ -263,7 +256,7 @@ class ReportForm extends React.Component {
                             </select>
                             </div>
                             <button type="submit" className="btn btn-primary btn-block">
-                            Submit
+                            Update 
                             </button>
                         </form>
                         </div>
@@ -279,4 +272,4 @@ class ReportForm extends React.Component {
  
 
 
-export default withRouter(ReportForm);
+export default UpdateItem;

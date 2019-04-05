@@ -167,6 +167,7 @@ main{
     display: block;
     font-style: italic;
     overflow: hidden;
+    text-overflow: ellipsis;
     color: rgb(212, 212, 212);
     
 }

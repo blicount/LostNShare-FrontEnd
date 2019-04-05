@@ -1,7 +1,8 @@
 import React from 'react';
 import {withRouter} from 'react-router-dom';
 import "../../css/bootstrap.min.css";
- 
+import "../../css/obj.css"
+
 class Massage extends React.Component {
     constructor(props) {
         super(props);
@@ -19,7 +20,7 @@ class Massage extends React.Component {
             <div className="row mt-5">
                 <div className="col-md-6 m-auto">
                   <div className="card card-body">  
-                        <label >You need to login\register in order to report a item</label>
+                        <label className="massage" >You need to login\register in order to report an item</label>
                         <button onClick={this.handelClick} href="/login">login</button>
                     </div>
                 </div>
