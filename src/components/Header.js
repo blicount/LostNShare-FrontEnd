@@ -7,46 +7,50 @@ class Header extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            email:'',
-            password:'',
-            links:[
+            email: '',
+            password: '',
+            links: [
                 { label: 'inventory', link: '/inventory', active: false },
-                { label: 'report', link: '/report' ,active: false},
-                { label: 'register', link: '/register' ,active: false},
-                { label: 'login', link: '/login' ,active: false}
+                { label: 'report', link: '/report', active: false },
+                { label: 'register', link: '/register', active: false },
+                { label: 'login', link: '/login', active: false }
             ]
         };
-    
+
         this.handleClickSelection = this.handleClickSelection.bind(this);
     };
-    componentWillMount(){
+    componentWillMount() {
         var name = JSON.parse(sessionStorage.getItem('userData'));
-       
+
         if (sessionStorage.getItem('userData') == null) {
-            this.setState({links:[
-                { label: 'inventory', link: '/inventory', active: false },
-                { label: 'report', link: '/report' ,active: false},
-                { label: 'register', link: '/register' ,active: false},
-                { label: 'login', link: '/login' ,active: false}
-            ]})
-        }else{
+            this.setState({
+                links: [
+                    { label: 'inventory', link: '/inventory', active: false },
+                    { label: 'report', link: '/report', active: false },
+                    { label: 'register', link: '/register', active: false },
+                    { label: 'login', link: '/login', active: false }
+                ]
+            })
+        } else {
             var user_id = JSON.parse(sessionStorage.getItem('userData')).id;
-            
-            this.setState({links:[
-                { label: 'inventory', link: '/inventory', active: false },
-                { label: 'report', link: '/report' ,active: false},
-                { label: name.name, link: '/profile/' +user_id +'/' ,active: false},
-                { label: 'logout', link: '/' ,active: false},
-            ]})
+
+            this.setState({
+                links: [
+                    { label: 'inventory', link: '/inventory', active: false },
+                    { label: 'report', link: '/report', active: false },
+                    { label: name.name, link: '/profile/' + user_id + '/', active: false },
+                    { label: 'logout', link: '/', active: false },
+                ]
+            })
         }
     }
 
 
 
-    handleClickSelection(e){
+    handleClickSelection(e) {
 
         //console.log(e.target.text)
-        if(e.target.text === 'logout'){
+        if (e.target.text === 'logout') {
             sessionStorage.removeItem('userData');
             localStorage.removeItem('PrevSideBarState');
             this.props.history.push('/');
@@ -55,32 +59,32 @@ class Header extends React.Component {
 
         this.state.links.forEach(element => {
             //console.log(element.label);
-            if(element.label === e.target.text){
+            if (element.label === e.target.text) {
                 //console.log(element)
                 element.active = true;
-            } else{
-                element.active = false 
-            }    
+            } else {
+                element.active = false
+            }
         });
     }
- 
 
-    render(){
+
+    render() {
         return (
             <header>
                 <span id="logo_nls">
-                   <a href="/" ><img alt="logo" src="https://gdurl.com/Ss79"/></a>
+                    <a href="/" ><img alt="logo" src="https://gdurl.com/Ss79" /></a>
                 </span>
                 <h1> LostNShare</h1>
-                 <NavigationBar links={this.state.links} handleClickSelection={this.handleClickSelection}/>
-                </header>
+                <NavigationBar links={this.state.links} handleClickSelection={this.handleClickSelection} />
+            </header>
         );
     }
 }
 
 
 
- 
+
 
 
 export default Header;

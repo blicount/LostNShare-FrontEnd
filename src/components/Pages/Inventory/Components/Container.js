@@ -8,29 +8,45 @@ class Container extends React.Component{
 	constructor(props){
 		super(props);
 		this.state = {
-			pages:'',
 			items:[],
 			current_display_items:[],
-			cuerrent_state:'Found',
-			currentPage:''
+			filter_display_items:[],
+			cuerrent_state:'found'
 		}
-		this.handlePageChange = this.handlePageChange.bind(this);
+		
 	}
 
 	 componentWillMount(){
-		
-		axios.get('https://lost-and-share.herokuapp.com/items/getAllActive' +this.state.cuerrent_state+ 'Items')         
+		var state = 'found';
+		axios.get('https://lost-and-share.herokuapp.com/items/getAllActiveItems')         
         .then((data)=>{
 			console.log(data);
-			var url_string = window.location.href;		
-			var url = new URL(url_string);
-			var page = url.searchParams.get("page");
-			//console.log(page);
-			this.setState({
-				items:data.data,
-				current_display_items:data.data/*.slice(page === 1 ? 0 : (page-1) * 9,(page) * 9)*/,
-				//pages:(Math.floor(data.data.length/9) +1),
-			})
+			if(localStorage.getItem('PrevSideBarState') !== null){
+				state = JSON.parse(localStorage.getItem('PrevSideBarState'))
+				this.setState({cuerrent_state:state.state })
+				console.log(state.state);
+			}
+			if(state.state === "lost" || state.state === "Lost"){
+				this.setState({
+					items:data.data,
+					current_display_items:data.data.filter((x) => {
+						if(x.itemtype === 'lost' || x.itemtype ===  'Lost'){
+							return x;
+						}
+					})
+					
+				})
+			}else{
+				this.setState({
+					items:data.data,
+					current_display_items:data.data.filter((x) => {
+						if(x.itemtype === 'found' || x.itemtype ===  'Found'){
+							return x;
+						}
+					})
+				})
+			}
+			
 		}).catch((error) =>{
 			console.log(error);
 
@@ -39,34 +55,101 @@ class Container extends React.Component{
 
     }
 
-	handlePageChange(e){
-		var url_string = window.location.href;
-		var nextPage =  window.location.href.slice(0, -1) + e.target.innerText ;
-
-		if(url_string !== nextPage){
-			this.props.handleChangePageAndState(window.location.assign(nextPage) );
-			//this.props.history.push('/foo');
-			
-			//window.location.assign(nextPage)
-
-		 }         
-
+	handleClickSelection(e){
+		console.log("show item");
 	}
 
-	handleClickSelection(e){
-		console.log("her");
+	componentWillReceiveProps(p){
+		console.log(p);
+		var shouldReturn = false;
+		if(p.filters.state === 'Found' || p.filters.state === 'found' || p.filters.state === ''){
+			this.setState({
+				current_display_items:this.state.items.filter((x) => {
+					if(x.itemtype === 'Found' || x.itemtype ===  'found'){
+						shouldReturn = true;
+						if(p.filters.category !== 'All'){
+							shouldReturn = false;
+						}
+						if(p.filters.category === x.category){
+							shouldReturn = true;
+							if(p.filters.sub_category !== 'All'){
+								shouldReturn = false;
+							}
+							if(p.filters.sub_category === x.sub_category){
+								shouldReturn = true;
+							}
+						}
+
+					}
+					console.log("from: "  + x.updatedate.substring(0,10) + " = " + p.filters.date_from)
+					if(Date.parse(x.updatedate.substring(0,10)) < Date.parse(p.filters.date_from) && p.filters.date_from !== ''){
+						shouldReturn = false;
+				
+					}
+					console.log("to: " + x.updatedate.substring(0,10) + " = " + p.filters.date_to)
+					if(Date.parse(x.updatedate.substring(0,10)) > Date.parse(p.filters.date_to) && p.filters.date_to !== ''){
+						shouldReturn = false;
+					}
+
+
+					if(shouldReturn === true){
+						shouldReturn = false;
+						return x;
+					}
+				})
+				
+			})
+			this.setState({cuerrent_state:'found'})
+		}else{
+			this.setState({
+				current_display_items:this.state.items.filter((x) => {
+					if(x.itemtype === 'lost' || x.itemtype ===  'Lost'){
+						shouldReturn = true;
+						if(p.filters.category !== 'All'){
+							shouldReturn = false;
+						}
+						if(p.filters.category === x.category){
+							shouldReturn = true;
+							if(p.filters.sub_category !== 'All'){
+								shouldReturn = false;
+							}
+							if(p.filters.sub_category === x.sub_category){
+								shouldReturn = true;
+							}
+						}
+
+					}
+					console.log("from: "  + x.updatedate.substring(0,10) + " = " + p.filters.date_from)
+					if(Date.parse(x.updatedate.substring(0,10)) < Date.parse(p.filters.date_from) && p.filters.date_from !== ''){
+						shouldReturn = false;
+				
+					}
+					console.log("to: " + x.updatedate.substring(0,10) + " = " + p.filters.date_to)
+					if(Date.parse(x.updatedate.substring(0,10)) > Date.parse(p.filters.date_to) && p.filters.date_to !== ''){
+						shouldReturn = false;
+					}
+
+
+					if(shouldReturn === true){
+						shouldReturn = false;
+						return x;
+					}
+				})
+			})
+			this.setState({cuerrent_state:'lost'})
+
+		}
+
+		if(p.query_string !== ''){
+			this.setState({
+				current_display_items: this.state.current_display_items.filter(x => String(x.title).includes(p.query_string))
+			})
+			
+		}
+	
 	}
 
 	render(){
-		/*
-		let pages_number = [];
-		for (var i = 1; i <= this.state.pages; i++) {
-			pages_number.push(<i onClick={this.handlePageChange} className="page_link" key={i}>{i}</i>);
-							<span  className="pages" >
-					{pages_number}
-				</span>
-		}
-		*/
 		return(
             <main>
 				<article id="container">

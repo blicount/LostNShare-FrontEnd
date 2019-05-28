@@ -10,11 +10,22 @@ class InventoryPage extends React.Component {
     constructor(props){
     super(props)
     this.state={
-        
+        query:'',
+        filters:{
+            state:'',
+            type:'',
+            category:'All',
+            sub_category:'',
+            date_to:'',
+            date_from:'',
+            location:''
+        },
     }
-    this.handleChangePageAndState = this.handleChangePageAndState.bind(this);
 
+    this.handleSearch = this.handleSearch.bind(this);
+    this.handleSearchFromSideBar = this.handleSearchFromSideBar.bind(this);
     }
+
 
 	componentDidMount(){
         window.addEventListener('scroll', this.listenScrollEvent);
@@ -24,10 +35,7 @@ class InventoryPage extends React.Component {
         window.removeEventListener('scroll', this.listenScrollEvent);
     }
 
-    handleChangePageAndState(page){
-        //this.props.history.replaceState(page);
-        
-    }
+
 
     listenScrollEvent(){
         console.log("scroll")
@@ -38,20 +46,46 @@ class InventoryPage extends React.Component {
         }
     }
 
+    handleSearch(query_string){
+        this.setState({query:query_string})
+    }
+
+    handleSearchFromSideBar(prop ,value){
+        console.log(prop + ":" + value)
+        var filters = {...this.state.filters}
+
+        if(prop === "state"){
+            if(value === "found" || value === "Found"){
+                filters.state = 'found';
+            }else{
+                filters.state = 'lost';
+            }
+        }
+        else if(prop === "category"){
+            filters.category = value;
+        }
+        else if(prop === "sub_category"){
+            filters.sub_category = value;
+        }
+        else if(prop === "date_from"){
+            filters.date_from = value;
+
+        }
+        else if(prop === "date_to"){
+            filters.date_to = value;
+        }
+
+        this.setState({filters})
+    }
 
     render(){
-        /*if (sessionStorage.getItem('userData') == null) {
-            return (<Massage/>)
-        }*/
-        //this.props.location.state.detail
-        //item_state={this.props.location.state.item_state}
         return (
           
             <div id="inventory">
-                <SideBar/>
+                <SideBar handleSearchFromSideBar={this.handleSearchFromSideBar}/>
                 <div onScroll={this.listenScrollEvent}>
-                    <SearchBar   />
-                    <Container handleChangePageAndState={this.handleChangePageAndState} />
+                    <SearchBar handleSearch={this.handleSearch}  />
+                    <Container query_string={this.state.query} filters={this.state.filters} />
                 </div>  
             </div>
         );

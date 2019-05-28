@@ -21,7 +21,9 @@ class ReportForm extends React.Component {
             selected_category:'',
             selected_sub_category:'',
             sub_category:[],
-            category:[]
+            category:[],
+            selected_item_id:'',
+            image_name:''
 
         };
         this.onChangeCategory = this.onChangeCategory.bind(this);
@@ -110,7 +112,7 @@ class ReportForm extends React.Component {
         const fd = new FormData();
         console.log(e.target.files[0])
         console.log(e.target.files[0].name)
-
+        this.setState({image_name:e.target.files[0].name})
         fd.append('image',e.target.files[0],e.target.files[0].name)
         this.setState({ image:e.target.files[0]})
         
@@ -146,7 +148,7 @@ class ReportForm extends React.Component {
         console.log(itemData)
 
         const fd = new FormData();
-        fd.append('ItemImage',this.state.image,'plaeholder')
+        fd.append('ItemImage',this.state.image,this.state.image_name)
         fd.append("email",user.email)
         fd.append("itemtype", this.state.item_state)
         fd.append("title",this.state.title)

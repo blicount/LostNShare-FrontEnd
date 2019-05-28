@@ -23,7 +23,7 @@ h1{
 }
 
 nav{
-   max-width: 400px;
+   max-width: 600px;
    width: 100%;
    display: flex;
    position: relative;
@@ -32,16 +32,31 @@ nav{
    font-size: 18px;
    left:5%;
    top:55px;
+ 
 }
 
 
 nav li:nth-child(3){
    position: relative;
-   left: 8%;
+   left: 10%;
+
 }
 
-nav a{
-   text-decoration: none;
+nav li:nth-child(4) a{
+   display:inline;
+   position: relative;
+   left: 20%;
+
+}
+
+
+a {
+   max-width:120px;
+   width: 100%;
+   display: block;
+   white-space: nowrap;
+   overflow-x: hidden;
+   text-overflow: ellipsis;
    color: white;
 }
 
@@ -63,8 +78,4 @@ nav a:hover{
    text-decoration: underline;
 }
 
-.inventory{}
-.report{}
-.register{}
-.login{}
 

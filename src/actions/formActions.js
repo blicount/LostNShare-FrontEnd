@@ -8,9 +8,13 @@ export function userRegisterRequest(userData) {
 
 export function userReportRequest(form_data) {
   return dispatch => {
-
-    
     return axios.post('https://lost-and-share.herokuapp.com/items/createItem', form_data);
+  }
+}
+
+export function userUpdateRequest(form_data) {
+  return dispatch => {
+    return axios.put('https://lost-and-share.herokuapp.com/items/updateItem', form_data);
   }
 }
 

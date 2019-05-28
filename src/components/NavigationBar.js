@@ -35,8 +35,9 @@ class NavigationBar extends React.Component {
         );
         return (
           <li key={index} className="menu__list-item">
+          { link.label ==='login' || link.label ==='logout'? <i>|   </i>: ''}
               {linkMarkup }
-               {link.label !== 'report' && link.label !=='inventory' &&  link.label !=='login' && link.label !=='logout'? <i>  |</i>: ''}
+              
               
           </li>
       );

@@ -18,6 +18,7 @@ class SideBar extends React.Component{
         this.onChange = this.onChange.bind(this);
         this.onChangeCategory = this.onChangeCategory.bind(this);
         this.onChangeSubCategory = this.onChangeSubCategory.bind(this);
+        this.handleSearchFromSideBar = this.handleSearchFromSideBar.bind(this);
     }
     
     componentWillMount(){
@@ -25,12 +26,11 @@ class SideBar extends React.Component{
             var state = JSON.parse(localStorage.getItem('PrevSideBarState'))
             console.log("old state")
             console.log(state.selected_category)
-            this.setState({selected_category:state.selected_category,selected_sub_category:state.selected_sub_category  })
+            this.setState({state:state.state })
+         
         }
-
         axios.get('https://lost-and-share.herokuapp.com/Categories/getAllCategories')         
         .then((data)=>{
-                    //console.log(data);
                     this.setState({category:data.data})
                 }
             ); 
@@ -43,38 +43,65 @@ class SideBar extends React.Component{
     }
 
     onChange(e){
+        if(e.target.name === "state"){
+            localStorage.setItem('PrevSideBarState', JSON.stringify(this.state));
+        }
         this.setState({[e.target.name]: e.target.value});
+        var prop = e.target.name
+        var value = e.target.value
+        this.props.handleSearchFromSideBar(prop,value);
+        
     }
 
     onChangeCategory(e){
         var index = e.target.selectedIndex
-        var selectedCategory = this.state.category[index-1].name
+        var selectedCategory = this.state.category[index].name
+        var prop = 'category'
+        var value = this.state.category[index].name
+        this.props.handleSearchFromSideBar(prop,value);
         document.getElementById('subCategory').innerHTML = '';
-        this.setState({selected_category:this.state.category[index-1].name})
-        axios.post('https://lost-and-share.herokuapp.com/subcategories/getAllSubCategoryByCategory', {category:this.state.category[index-1].name} )         
-        .then((data)=>{   
-                console.log(data.data.subcategorylist[0])              
-                    this.setState({
-                        sub_category:data.data.subcategorylist,
-                        selected_sub_category:data.data.subcategorylist[0]         
-                    })
-                    data.data.subcategorylist.map( (sub_cat, i) => {
-                        var op = document.createElement("option");
-                        var textnode = document.createTextNode(sub_cat); 
-                        op.className = 'sub_category';
-                        op.key = i;
-                        op.appendChild(textnode);
-                        document.getElementById('subCategory').appendChild(op);
-                        return('');        
-                    })    
-        }).catch((error) => (console.log(error))); 
-
+        this.setState({selected_category:this.state.category[index].name})
+        if(selectedCategory !== "All"){   
+            axios.post('https://lost-and-share.herokuapp.com/subcategories/getAllSubCategoryByCategory', {category:this.state.category[index-1].name} )         
+            .then((data)=>{                 
+                        this.setState({
+                            sub_category:data.data.subcategorylist,
+                            selected_sub_category:data.data.subcategorylist[0]         
+                        })
+                        var prop = 'sub_category' 
+                        this.props.handleSearchFromSideBar(prop,"All");
+                        
+                        data.data.subcategorylist.map( (sub_cat, i) => {
+                            if(i === 0){
+                                var op = document.createElement("option");
+                                var textnode = document.createTextNode("All"); 
+                                op.className = 'sub_category';
+                                op.key = i;
+                                op.appendChild(textnode);
+                                document.getElementById('subCategory').appendChild(op);
+                            }
+                            var op = document.createElement("option");
+                            var textnode = document.createTextNode(sub_cat); 
+                            op.className = 'sub_category';
+                            op.key = i+1;
+                            op.appendChild(textnode);
+                            document.getElementById('subCategory').appendChild(op);
+                            return('');        
+                        })           
+            }).catch((error) => (console.log(error))); 
+        }
     }
 
     onChangeSubCategory(e){
-        var index = e.target.selectedIndex;
+        var index = e.target.selectedIndex-1;
         var selectedSubCategory = this.state.sub_category[index];
         this.setState({selected_sub_category:selectedSubCategory});
+        var prop = 'sub_category'
+        var value = this.state.sub_category[index] 
+        if(index < 0){
+            value = "All";
+        }
+        this.props.handleSearchFromSideBar(prop,value);
 
     }
 
@@ -83,10 +110,13 @@ class SideBar extends React.Component{
 
     }
     
+    handleSearchFromSideBar(){
+        this.props.handleSearchFromSideBar('s');
+    }
 
 	render(){
 		return(
-				<div id="side_bar" >
+				<div id="side_bar"  >
                      <span className="form-group">
                         <label className="select " htmlFor="search_state">State</label>
                         <select className="form-control" onChange={this.onChange} name="state" value={this.state.state}>
@@ -98,7 +128,6 @@ class SideBar extends React.Component{
                     <span className="form-group">
                         <label className="select " htmlFor="catagory">Catagory</label>
                         <select required className="form-control" onChange={this.onChangeCategory} value={this.state.selected_category}>
-                                <option  value="blank" >...</option>
                                 { 
                                     this.state.category.map( (cat, i) => {
                                     return (
@@ -119,35 +148,18 @@ class SideBar extends React.Component{
                     <span className="form-group">
                         <label className="select " htmlFor="dateFrom" >From Date:</label>
                         <input 
-                           
+                           onChange={this.onChange}
                             type="date"
                             name="date_from"
                             className="form-control"
                         />
                         <label className="select" htmlFor="dateTo" >To Date:</label>
                         <input 
-                            
+                            onChange={this.onChange}
                             type="date"
                             name="date_to"
                             className="form-control"
                         />
-                    </span>
-                    <span className="line"/>
-                    <span className="form-group">
-                        <label className="select " htmlFor="Color">Color</label>
-                        <select className="form-control">
-                        <option value="blank" >...</option>
-
-                        </select>
-                        <label className="select" htmlFor="Size">Size</label>
-                        <select className=" form-control">
-                        <option value="blank">...</option>
-
-                        </select>
-                        <label className="select" htmlFor="Shape">Shape</label>
-                        <select className="form-control">
-                            <option></option>
-                        </select>
                     </span>
                     <span className="line"/>
 				</div>

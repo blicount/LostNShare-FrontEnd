@@ -14,7 +14,7 @@ class General extends React.Component{
 
 	componentWillMount(){
 		var user  = JSON.parse( sessionStorage.getItem('userData'))
-		console.log(user)
+		//console.log(user)
 		this.setState({user:user})
 	}
 
