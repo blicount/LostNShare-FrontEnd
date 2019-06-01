@@ -1,0 +1,33 @@
+
+.container{
+    margin-top: 5%;
+}
+.itemtype{
+    background: green;
+    width: 15%;
+    height: 30px;
+    color:white;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.col-md-7 h2{
+    color: #555;
+}
+.categoryimg{
+    height: 30px;
+}
+.subcategory{
+    color : #FE980F;
+    font-size: 26px;
+    font-weight: bold;
+}
+.matches{
+    margin-top: 10%; 
+}
+hr {
+    display: block;
+    height: 1px;
+    border-top: 2px solid #ccc;
+    padding: 0;
+}
