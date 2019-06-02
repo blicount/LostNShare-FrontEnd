@@ -7,14 +7,15 @@ main{
 }
 
 section{
-    width: 100%;
+    width: 120%;
+    margin: auto;
     display:block;
     background-color: #d4e3fc;
 }
 
 h4{
     position: relative;
-    left:15%;
+    left:18%;
     font-size: 25px !important;
     display: block;
     margin-bottom: 10px !important;
@@ -24,7 +25,7 @@ h4{
 }
 
 main section:nth-child(2){
-     height: 300px;
+     height: 600px;
 }
 
 main section:nth-child(4){
@@ -41,8 +42,7 @@ main section:nth-child(4){
 }
 
 
-#most_recent{     
-}
+
 
 #most_recent article{
     max-width: 1000px;

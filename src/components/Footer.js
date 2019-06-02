@@ -1,18 +1,44 @@
 import React from 'react';
 import "../css/footer.css"
 class Footer extends React.Component{
-
-	componentWillMount(){
+	constructor(props){
+		super(props)
+		this.state = {
+			name:'',
+			id:''
+		 }
 		
 	}
 
-	render(){
-		return(
-				<footer>
-this is a footer
-				</footer>
-			);
+	componentWillMount(){
+		if (sessionStorage.getItem('userData') !== null) {
+			var u_data = sessionStorage.getItem('userData')
+			console.log(u_data)
+			var data = JSON.parse(u_data);
+			this.setState({
+				name:data.name,
+				id:data.id
+			})
 		}
 	}
+
+	render(){
+		if (sessionStorage.getItem('userData') === null) {
+            return (
+				<footer>
+					<a href="/login">Login or Register</a>
+				</footer>
+			)
+		}
+		else{	
+			
+			return(
+			<footer>
+				<a href={"/profile/" + this.state.id}>{this.state.name}</a>
+			</footer>
+			)
+		}
+	}
+}
 export default Footer;
 

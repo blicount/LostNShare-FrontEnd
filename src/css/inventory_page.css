@@ -189,15 +189,14 @@ main{
 .item_img{
     max-width: 150px;
     max-height: 150px;
-    width: 100%;
     width: auto;
     height: auto;
     overflow-x: hidden;
     vertical-align:middle;
     position: absolute;
-    margin-left: 6%;
+    margin-left: 5%;
     text-align: center;
-    margin-top: 2%;
+    margin-top: 1%;
     border:1px solid rgb(184, 184, 184);
     
 }

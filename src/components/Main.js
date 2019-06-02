@@ -20,7 +20,7 @@ class Main extends React.Component {
 			console.log(data.data);
 			this.setState({
 				items:data.data,
-				current_display_items:data.data.slice(0,3),
+				current_display_items:data.data.slice(0,6),
 				
 			})
 		});
@@ -41,10 +41,6 @@ class Main extends React.Component {
                         <article>
                         <Item current_display_items={this.state.current_display_items} handleClickSelection={this.handleClickSelection}/>
                         </article>
-                    </section>
-                    <h4>Most Popular</h4>
-                    <section id="most_popular">
-                        <article>s</article>
                     </section>
                 </main>
             </div>

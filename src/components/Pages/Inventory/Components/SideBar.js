@@ -135,10 +135,10 @@ class SideBar extends React.Component{
                                         )
                                     })
                                 }
-                            </select>
-                            <label  className="select" htmlFor="subcatagory">Sub Catagory</label>
-                            <select required id="subCategory" className="form-control" onChange={this.onChangeSubCategory} value={this.state.selected_sub_category}>
-                            </select>
+                        </select>
+                        <label  className="select" htmlFor="subcatagory">Sub Catagory</label>
+                        <select required id="subCategory" className="form-control" onChange={this.onChangeSubCategory} value={this.state.selected_sub_category}>
+                        </select>
                         <label className="select" htmlFor="location">Location</label>
                         <select className="form-control" onChange={this.onChange} name="location" value={this.state.location}>
                             <option></option>
