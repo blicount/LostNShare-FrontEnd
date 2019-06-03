@@ -21,6 +21,7 @@ class Items extends React.Component {
 		this.updateItem = this.updateItem.bind(this);
 		this.deleteItem = this.deleteItem.bind(this);
 		this.hideUpdateForm = this.hideUpdateForm.bind(this);
+		this.matchItem = this.matchItem.bind(this);
 	}
 
 	componentWillMount() {
@@ -92,6 +93,21 @@ class Items extends React.Component {
 		}
 	}
 
+
+	matchItem(e){
+		var index = e.target.getAttribute('index');
+		if (index !== null) {
+			
+			axios.get('https://lost-and-share.herokuapp.com/items/matchingServiceForItem/' + this.state.owner_items[ index]._id)
+				.then((data) => {
+					console.log(data)
+				})
+				.catch((error) => {
+					console.log(error);
+				})
+		}
+	}
+
 	render() {
 		const { userUpdateRequest } = this.props;
 		if (sessionStorage.getItem('userData') == null) {
@@ -114,7 +130,7 @@ class Items extends React.Component {
 									</p>
 									<p className="profile_item_category">Category:{' ' + item.category}</p>
 									<p className="profile_item_subcategory">SubCategory:{' ' + item.subcategory}</p>
-									<a className="pofile_item_title" href={'../item/' + item._id} key={i}>{item.title}</a>
+									<a className="pofile_item_title" href={'../../item/' + item._id} key={i}>{item.title}</a>
 									<p className="pofile_item_description" >{item.desc}</p>
 									<p className="profile_item_type">Item case:
 												<i style={item.itemtype === 'Found' || item.itemtype === 'found' ? { color: "green" } : { color: "red" }}>
@@ -123,6 +139,7 @@ class Items extends React.Component {
 									</p>
 									<button onClick={this.updateItem} index={i} className="btn btn-primary btn-block">Update</button>
 									<button onClick={this.deleteItem} index={i} className="btn btn-primary btn-block">Remove</button>
+									<button onClick={this.matchItem}  index={i} className="btn btn-primary btn-block">Match</button>
 
 								</span>
 

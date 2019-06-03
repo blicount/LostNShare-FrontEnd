@@ -9,7 +9,6 @@ import UserMannage from './Components/UserMannage';
 import ItemMannage from './Components/ItemMannage'
 import CategoryMannage from './Components/CategoryMannage'
 import ReportList from './Components/ReportList';
-import Matching from './Components/Matching'
 import { connect } from 'react-redux'
 import '../../../css/profile.css'
 
@@ -21,7 +20,6 @@ class ProfilePage extends React.Component {
             links: [
                 { label: 'General', active: true },
                 { label: 'My Items', active: false },
-                { label: 'Matching', active: false },
                 { label: 'Report List', active: false },
                 { label: 'Category Mannage', active: false },
                 { label: 'User Mannage', active: false },
@@ -35,7 +33,7 @@ class ProfilePage extends React.Component {
 
     }
 
-    componentDidMount() {
+    componentWillMount() {
         var user = JSON.parse(sessionStorage.getItem('userData'));
         var mannager = false;
         console.log(user.email)
@@ -49,7 +47,6 @@ class ProfilePage extends React.Component {
                         links: [
                             { label: 'General', active: true },
                             { label: 'My Items', active: false },
-                            { label: 'Matching', active: false },
                             { label: 'Report List', active: false },
                             { label: 'Category Mannage', active: false },
                             { label: 'User Mannage', active: false },
@@ -62,7 +59,6 @@ class ProfilePage extends React.Component {
                         links: [
                             { label: 'General', active: true },
                             { label: 'My Items', active: false },
-                            { label: 'Matching', active: false },
 
                         ]
                     })
@@ -121,11 +117,10 @@ class ProfilePage extends React.Component {
                     <div className="profile_container">
                     <General isVisible={this.state.links[0].active ? 'visible' : 'hidden'} />
                     <Items isVisible={this.state.links[1].active ? 'visible' : 'hidden'} />
-                    <Matching isVisible={this.state.links[2].active ? 'visible' : 'hidden'} />
-                    <ReportList isVisible={this.state.links[3].active ? 'visible' : 'hidden'} />
-                    <CategoryMannage isVisible={this.state.links[4].active ? 'visible' : 'hidden'}/>
-                    <UserMannage isVisible={this.state.links[5].active ? 'visible' : 'hidden'} />
-                    <ItemMannage isVisible={this.state.links[6].active ? 'visible' : 'hidden'} />
+                    <ReportList isVisible={this.state.links[2].active ? 'visible' : 'hidden'} />
+                    <CategoryMannage isVisible={this.state.links[3].active ? 'visible' : 'hidden'}/>
+                    <UserMannage isVisible={this.state.links[4].active ? 'visible' : 'hidden'} />
+                    <ItemMannage isVisible={this.state.links[5].active ? 'visible' : 'hidden'} />
                     </div>
                 </div>
             );
@@ -138,7 +133,6 @@ class ProfilePage extends React.Component {
                     <div className="profile_container">
                         <General isVisible={this.state.links[0].active ? 'visible' : 'hidden'} />
                         <Items isVisible={this.state.links[1].active ? 'visible' : 'hidden'} />
-                        <Matching isVisible={this.state.links[2].active ? 'visible' : 'hidden'} />
                     </div>
                 </div>
             );

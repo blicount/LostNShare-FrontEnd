@@ -31,6 +31,7 @@ class SideBar extends React.Component{
         }
         axios.get('https://lost-and-share.herokuapp.com/Categories/getAllCategories')         
         .then((data)=>{
+                    console.log(data)
                     this.setState({category:data.data})
                 }
             ); 
@@ -63,7 +64,8 @@ class SideBar extends React.Component{
         this.setState({selected_category:this.state.category[index].name})
         if(selectedCategory !== "All"){   
             axios.post('https://lost-and-share.herokuapp.com/subcategories/getAllSubCategoryByCategory', {category:this.state.category[index-1].name} )         
-            .then((data)=>{                 
+            .then((data)=>{    
+                        console.log(data)
                         this.setState({
                             sub_category:data.data.subcategorylist,
                             selected_sub_category:data.data.subcategorylist[0]         

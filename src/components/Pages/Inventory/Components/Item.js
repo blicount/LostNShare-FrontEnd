@@ -12,17 +12,10 @@ class Item extends React.Component{
         this.getListItemByParams = this.getListItemByParams.bind(this);
 	}
 	componentWillMount(){
-        
-
-
-   
-
-     
     }
 
 
     getListItemByParams(){
-
     }
 
     componentWillReceiveProps(p){

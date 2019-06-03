@@ -13,7 +13,6 @@ class Footer extends React.Component{
 	componentWillMount(){
 		if (sessionStorage.getItem('userData') !== null) {
 			var u_data = sessionStorage.getItem('userData')
-			console.log(u_data)
 			var data = JSON.parse(u_data);
 			this.setState({
 				name:data.name,

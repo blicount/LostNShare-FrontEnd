@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import "../../../css/bootstrap.min.css"
 import "../../../css/item.css"
+import Matching from '../../Objects/Matching';
 
  
 class ItemPage extends React.Component {
@@ -17,7 +18,8 @@ class ItemPage extends React.Component {
           category:'',
           subcategory:'',
           description:'',
-          picpath:'' 
+          picpath:'' ,
+          match_list:[]
         }
     }
    
@@ -38,7 +40,8 @@ class ItemPage extends React.Component {
               category    :data.data.category,
               subcategory :data.data.subcategory,
               description :data.data.desc,
-              picpath     :data.data.picpath
+              picpath     :data.data.picpath,
+              match_list  :data.data.matching_items
             })   
         })
         .catch(function (error) {
@@ -58,32 +61,32 @@ class ItemPage extends React.Component {
 
     render(){
         return (
-          <div className ="container">
-            <div className="row">
-              <div className="col-md-4">
-                <div id="carouselExampleControls" className="carousel slide" data-ride="carousel">
-                  <img src={this.state.picpath} className="d-block w-100" alt="item img" />
-                </div>
+            <div className ="container">
+              <h6>Item Property</h6>
+                  <div className="item_property">
+                  <img alt="pic" className="property_item_img" src={this.state.picpath } />
+									<p className="property_item_state">Item state:
+												<i style={this.state.itemstate === 'active' ? { color: "green" } : { color: "red" }}>
+											{' ' + this.state.itemstate}
+										</i>
+									</p>
+									<p className="property_item_category">Category:{' ' + this.state.category}</p>
+									<p className="property_item_subcategory">SubCategory:{' ' + this.state.subcategory}</p>
+									<p className="property_item_title" >{this.state.title}</p>
+									<p className="property_item_description" >{this.state.description}</p>
+                  <p  className="property_item_owner">Owner: {this.state.owner}</p>
+                  <p  className="property_item_location">Location: {this.state.location}</p>
+                  <p className="property_item_type">Item case:
+												<i style={this.state.itemtype === 'Found' || this.state.itemtype === 'found' ? { color: "green" } : { color: "red" }}>
+											{' ' + this.state.itemtype}
+										</i>
+									</p>
+           
               </div>
-              <div className="col-md-7">
-                <div className="card-body">
-                    <p class="itemtype text-center">{this.state.itemtype}</p>
-                    <h2>{this.state.title}</h2>
-                    <p> {this.state.category}, {this.state.subcategory} </p>
-                    <p className="subcategory">{this.state.subcategory}</p>
-                    <p><b>Owner:</b> {this.state.owner}</p>
-                    <p><b>Location:</b> {this.state.location}</p>
-                    <p><b>Item state:</b> {this.state.itemstate}</p>
-                    <p><b>Description:</b>  {this.state.description}</p>
-                </div>
+              <h6>Matched Items</h6>
+              <Matching item={this.state.match_list } owner={this.state.owner}/>
             </div>
-            <div className="col-md-4">
-                <div className="matches">
-                    <h2>Matched Items</h2>
-                </div>
-            </div>
-            </div>
-          </div>
+          
         );
  
     }
