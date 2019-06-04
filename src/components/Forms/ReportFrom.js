@@ -16,7 +16,7 @@ class ReportForm extends React.Component {
             file:'',
             image:'',
             item_state:'lost',
-            location:'test',
+            location:'',
             imagePreviewUrl:'',
             selected_category:'',
             selected_sub_category:'',
@@ -263,6 +263,23 @@ class ReportForm extends React.Component {
                             <select required id="subCategory" className="form-control-report form-control"
                                  onChange={this.onChangeSubCategory}>
                             </select>
+                            <label  id="location_select" className="select" htmlFor="location">Location</label>
+                            <select required id="subCategory" className="form-control-report form-control"
+                                 /*onChange={this.onChangeSubCategory}*/>
+                            </select>
+                            </div>
+                            <span className="line"/>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label id="shape_select" className="select" htmlFor="shape">Shape</label>
+                                    <select required id="subCategory" className="form-control-report form-control">
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label id="color_select" className="select" htmlFor="color">Color</label>
+                                    <select required id="subCategory" className="form-control-report form-control">
+                                    </select>                                
+                                </div>
                             </div>
                             <button type="submit" className="btn btn-primary btn-block">
                             Submit
