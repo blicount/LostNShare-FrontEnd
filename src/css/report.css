@@ -72,3 +72,13 @@ input[type="file"] {
 
 }
 
+.line{
+    max-width: 120%;
+    margin: auto;
+    height: 1px;
+    border-bottom: 1px solid black;
+    display: block;
+    margin-bottom: 15px;
+    margin-top:25px;;
+}
+
