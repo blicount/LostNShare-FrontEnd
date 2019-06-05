@@ -74,6 +74,9 @@ class InventoryPage extends React.Component {
         else if(prop === "date_to"){
             filters.date_to = value;
         }
+        else if(prop === "location"){
+            filters.location = value;
+        }
 
         this.setState({filters})
     }

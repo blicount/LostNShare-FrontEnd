@@ -8,9 +8,11 @@ class SideBar extends React.Component{
         this.state = {
             category:[],
             sub_category:[],
+            locations:[],
             state:'found',
             selected_category:'',
             selected_sub_category:'',
+            location_selected:'',
             date_to:'',
             date_from:'',
             location:''
@@ -19,6 +21,8 @@ class SideBar extends React.Component{
         this.onChangeCategory = this.onChangeCategory.bind(this);
         this.onChangeSubCategory = this.onChangeSubCategory.bind(this);
         this.handleSearchFromSideBar = this.handleSearchFromSideBar.bind(this);
+        this.onChangeLocation = this.onChangeLocation.bind(this);
+
     }
     
     componentWillMount(){
@@ -33,12 +37,11 @@ class SideBar extends React.Component{
                     this.setState({category:data.data})
                 }
             ); 
-       /* fetch('https://lost-and-share.herokuapp.com/location')         
-        .then((Response)=>Response.json())
+        axios.get('https://lost-and-share.herokuapp.com/Locations/getAllLocatoins')         
         .then((data)=>{
-                    console.log(data);
-                    this.setState({location:data})}
-            ); */  		
+                    this.setState({locations:data.data})
+                }
+            ).catch((error) => (console.log(error))); 		
     }
 
     onChange(e){
@@ -61,7 +64,7 @@ class SideBar extends React.Component{
         document.getElementById('subCategory').innerHTML = '';
         this.setState({selected_category:this.state.category[index].name})
         if(selectedCategory !== "All"){   
-            axios.post('https://lost-and-share.herokuapp.com/subcategories/getAllSubCategoryByCategory', {category:this.state.category[index-1].name} )         
+            axios.post('https://lost-and-share.herokuapp.com/subcategories/getAllSubCategoryByCategory', {category:this.state.category[index].name} )         
             .then((data)=>{    
                         console.log(data)
                         this.setState({
@@ -105,6 +108,15 @@ class SideBar extends React.Component{
 
     }
 
+    onChangeLocation(e){
+        
+        this.setState({location_selected:e.target.value})
+        var prop = 'location'
+        this.props.handleSearchFromSideBar(prop,e.target.value);
+
+    }
+
+
     componentDidUpdate(){
         localStorage.setItem('PrevSideBarState', JSON.stringify(this.state));
 
@@ -140,8 +152,16 @@ class SideBar extends React.Component{
                         <select required id="subCategory" className="form-control" onChange={this.onChangeSubCategory} value={this.state.selected_sub_category}>
                         </select>
                         <label className="select" htmlFor="location">Location</label>
-                        <select className="form-control" onChange={this.onChange} name="location" value={this.state.location}>
-                            <option></option>
+                        <select  id="location" className="form-control"  onChange={this.onChangeLocation}>
+                        <option  className="location">All</option>
+                             { 
+                                    this.state.locations.map((loc, i) => {
+                                    return (
+
+                                        <option  className="location" key={i}>{loc.name}</option>
+                                        )
+                                    })
+                                }
                         </select>
                     </span>
                     <span className="line"/>

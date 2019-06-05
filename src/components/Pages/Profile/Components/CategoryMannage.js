@@ -56,22 +56,36 @@ class CategoryMannage extends React.Component{
         if(this.state.new_category !== ''){
             axios.post('https://lost-and-share.herokuapp.com/Categories/insertCategory/', {category:this.state.new_category} )         
                 .then((data)=>{                 
-                console.log(data);               
+                console.log(data);     
+                axios.get('https://lost-and-share.herokuapp.com/Categories/getAllCategories')         
+                .then((data)=>{
+                            this.setState({category:data.data,new_category:''})
+                            
+                        }
+                    );    
             }).catch((error) => (console.log(error))); 
     
         }
     }
     
     addSubCategory(){
+        this.setState({newsubCategoryArray:''})
         if(this.state.newsubCategoryArray !== '' && (this.state.chosen_category !== '' || this.state.chosen_category !== "...")){
             var array = this.state.newsubCategoryArray;
             array = array.split(',')
             axios.post('https://lost-and-share.herokuapp.com/Categories/insertSubCategory', {category:this.state.chosen_category,subcategory:array})         
                 .then((data)=>{                 
-                console.log(data);               
+                console.log(data); 
+                axios.get('https://lost-and-share.herokuapp.com/Categories/getAllCategories')         
+                .then((data)=>{
+                            this.setState({category:data.data})
+                        }
+                    );   
+                        
             }).catch((error) => (console.log(error))); 
             
         }
+       
     }
 
     deleteCategory(){
@@ -153,6 +167,7 @@ class CategoryMannage extends React.Component{
                     onChange={this.onChange}
                     type="category"
                     id="category"
+                    value={this.state.new_category}
                     name="new_category"
                     className="form-control"
                     placeholder="Enter Category"
@@ -182,7 +197,8 @@ class CategoryMannage extends React.Component{
                     
                     onChange={this.onChange}
                     type="category"
-                    id="category"
+                    value={this.state.newsubCategoryArray}
+                    id="newsubCategoryArray"
                     name="newsubCategoryArray"
                     className="form-control"
                     placeholder="Enter subCategory use , between subCategorys"

@@ -17,7 +17,8 @@ class ReportForm extends React.Component {
             file:'',
             image:'',
             item_state:'lost',
-            location:'test',
+            location:[],
+            location_selected:'',
             imagePreviewUrl:'',
             selected_category:'',
             selected_sub_category:'',
@@ -26,6 +27,7 @@ class ReportForm extends React.Component {
             selected_item_id:'',
             image_name:'',
             shape:[
+                'none',
                 'triangle',
                 'trapezoid',
                 'star',
@@ -35,7 +37,7 @@ class ReportForm extends React.Component {
                 'heart',
                 'diamond'
             ],
-            color:'blue'
+            color:'none'
 
         };
         this.onChangeCategory = this.onChangeCategory.bind(this);
@@ -43,42 +45,23 @@ class ReportForm extends React.Component {
         this.onChange = this.onChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
         this.fileSelectedHandler = this.fileSelectedHandler.bind(this);
-        this.changeHandler = this.changeHandler.bind(this)
-       
+        this.changeHandler = this.changeHandler.bind(this);
+        this.onChangeLocation = this.onChangeLocation.bind(this);
     }
 
 
     componentWillMount(){
         axios.get('https://lost-and-share.herokuapp.com/Categories/getAllCategories')         
         .then((data)=>{
-                    this.setState({category:data.data,selected_category:data.data[0]._id})
-                    axios.post('https://lost-and-share.herokuapp.com/subcategories/getAllSubCategoryByCategory', {category:data.data[0].name} )         
-                    .then((data)=>{ 
-                        console.log(data);
-                
-                                this.setState({
-                                    sub_category:data.data.subcategorylist,
-                                    selected_sub_category:data.data.subcategorylist[0]
-                                })
-                                data.data.subcategorylist.map( (sub_cat, i) => {
-                                    var op = document.createElement("option");
-                                    var textnode = document.createTextNode(sub_cat); 
-                                    op.className = 'sub_category';
-                                    op.key = i;
-                                    op.appendChild(textnode);
-                                    document.getElementById('subCategory').appendChild(op);
-                                    return(null);        
-                                })    
-                    }).catch((error) => (console.log(error))); 
+                    this.setState({category:data.data})
                 }
-            ); 
+            ).catch((error) => (console.log(error)));  
 
-       /* fetch('https://lost-and-share.herokuapp.com/location')         
-        .then((Response)=>Response.json())
+        axios.get('https://lost-and-share.herokuapp.com/Locations/getAllLocatoins')         
         .then((data)=>{
-                    console.log(data);
-                    this.setState({location:data})}
-            ); */  	
+                    this.setState({location:data.data})
+                }
+            ).catch((error) => (console.log(error))); 
             
             
     }
@@ -89,27 +72,28 @@ class ReportForm extends React.Component {
         var index = e.target.selectedIndex
         var selectedCategory = this.state.category[index].name
         document.getElementById('subCategory').innerHTML = '';
-        this.setState({selected_category:this.state.category[index].name})
-        axios.post('https://lost-and-share.herokuapp.com/subcategories/getAllSubCategoryByCategory', {category:this.state.category[index].name})         
-        .then((data)=>{           
-            console.log(data.data)      
-                    this.setState({
-                        sub_category:data.data.subcategorylist,
-                        selected_sub_category:data.data.subcategorylist[0]
-                    })
-                    data.data.subcategorylist.map( (sub_cat, i) => {
-                        var op = document.createElement("option");
-                        var textnode = document.createTextNode(sub_cat); 
-                        op.className = 'sub_category';
-                        op.key = i;
-                        op.appendChild(textnode);
-                        document.getElementById('subCategory').appendChild(op);
-                        return(null);        
-                    })    
-        }).catch((error) => (console.log(error))); 
-       
+        this.setState({mannage_selected_category:this.state.category[index].name})
+        if(selectedCategory !== "All"){   
+            axios.post('https://lost-and-share.herokuapp.com/subcategories/getAllSubCategoryByCategory', {category:this.state.category[index].name} )         
+            .then((data)=>{          
+                console.log(data.data)      
+                        this.setState({
+                            sub_category:data.data.subcategorylist,
+                            selected_sub_category:data.data.subcategorylist[0]
+                        })
+                        data.data.subcategorylist.map( (sub_cat, i) => {
+                            var op = document.createElement("option");
+                            var textnode = document.createTextNode(sub_cat); 
+                            op.className = 'sub_category';
+                            op.key = i;
+                            op.appendChild(textnode);
+                            document.getElementById('subCategory').appendChild(op);
+                            return(null);        
+                        })    
+            }).catch((error) => (console.log(error))); 
+        
+        }
     }
-
     onChangeSubCategory(e){
         var index = e.target.selectedIndex;
         var selectedSubCategory = this.state.sub_category[index];
@@ -150,6 +134,12 @@ class ReportForm extends React.Component {
         reader.readAsDataURL(file)
     }
 
+
+    onChangeLocation(e){
+        console.log(e.target.value)
+        this.setState({location_selected:e.target.value})
+    }
+
     onSubmit(e){
         e.preventDefault();
 
@@ -176,6 +166,9 @@ class ReportForm extends React.Component {
         fd.append("subcategory",this.state.selected_sub_category)
         fd.append("location",this.state.location)
         fd.append("desc",this.state.description)
+        fd.append("shape",this.state.shape)
+        fd.append("color",this.state.color)
+        fd.append("location",this.state.location_selected)
 
         
 
@@ -201,6 +194,7 @@ class ReportForm extends React.Component {
     changeHandler(colors){
         console.log(colors)
         this.setState({color:colors.color})
+        
     }
 
     render(){
@@ -274,7 +268,7 @@ class ReportForm extends React.Component {
                             </label>
                             <input id="file-upload" type="file" onChange={this.fileSelectedHandler }/>
                             <div className="imgPreview">{$imagePreview}</div>
-                            <div class="form-group ">
+                            <div className="form-group ">
                                 <label id="shape_select_label" className="shape" htmlFor="shape">Shape</label>
                                 <select required id="shape_select"  className="form-control ">
                                 { 
@@ -286,9 +280,9 @@ class ReportForm extends React.Component {
                                 }
                                 </select>
                             </div>
-                            <div class="form-group">
+                            <div className="form-group">
                                 <label id="color_select_label" className="select" htmlFor="color" >Color</label>
-                                <input type="text" className="color_textbox" name="color" value={this.state.color} class="form-control"></input>
+                                <input type="text" className="color_textbox form-control" value={this.state.color} onChange={this.changeHandler} name="color" id="colorPicker" ></input>
                                 <ColorPicker className="colorPicker" enableAlpha={false} color={'#345679'}  mode="RGB" onChange={this.changeHandler} />
                                 </div>
                             </div>
@@ -309,8 +303,14 @@ class ReportForm extends React.Component {
                                  onChange={this.onChangeSubCategory}>
                             </select>
                             <label  id="location_select" className="select" htmlFor="location">Location</label>
-                            <select required id="subCategory" className="form-control-report form-control"
-                                 onChange={this.onChangeSubCategory}>
+                            <select required id="location" className="form-control-report form-control"  onChange={this.onChangeLocation}>
+                                { 
+                                    this.state.location.map( (loc, i) => {
+                                    return (
+                                        <option  className="location" key={i}>{loc.name}</option>
+                                        )
+                                    })
+                                }
                             </select>
                             </div>
                             <span className="line"/>

@@ -81,16 +81,26 @@ class Container extends React.Component{
 						}
 
 					}
-					console.log("from: "  + x.updatedate.substring(0,10) + " = " + p.filters.date_from)
+					//console.log("from: "  + x.updatedate.substring(0,10) + " = " + p.filters.date_from)
 					if(Date.parse(x.updatedate.substring(0,10)) < Date.parse(p.filters.date_from) && p.filters.date_from !== ''){
 						shouldReturn = false;
 				
 					}
-					console.log("to: " + x.updatedate.substring(0,10) + " = " + p.filters.date_to)
+					//console.log("to: " + x.updatedate.substring(0,10) + " = " + p.filters.date_to)
 					if(Date.parse(x.updatedate.substring(0,10)) > Date.parse(p.filters.date_to) && p.filters.date_to !== ''){
 						shouldReturn = false;
 					}
-
+					
+					if(p.filters.location !== ''){
+						this.setState({
+							current_display_items: this.state.current_display_items.filter((x)=>{
+								console.log(x.location + " !=" + p.filters.location)
+								if(x.location !== p.filters.location){
+									shouldReturn = false;
+								}
+							})
+						})
+					}
 
 					if(shouldReturn === true){
 						shouldReturn = false;
@@ -119,16 +129,26 @@ class Container extends React.Component{
 						}
 
 					}
-					console.log("from: "  + x.updatedate.substring(0,10) + " = " + p.filters.date_from)
+					//console.log("from: "  + x.updatedate.substring(0,10) + " = " + p.filters.date_from)
 					if(Date.parse(x.updatedate.substring(0,10)) < Date.parse(p.filters.date_from) && p.filters.date_from !== ''){
 						shouldReturn = false;
 				
 					}
-					console.log("to: " + x.updatedate.substring(0,10) + " = " + p.filters.date_to)
+					//console.log("to: " + x.updatedate.substring(0,10) + " = " + p.filters.date_to)
 					if(Date.parse(x.updatedate.substring(0,10)) > Date.parse(p.filters.date_to) && p.filters.date_to !== ''){
 						shouldReturn = false;
 					}
 
+					if(p.filters.location !== ''){
+						this.setState({
+							current_display_items: this.state.current_display_items.filter((x)=>{
+								console.log(x.location + " !=" + p.filters.location)
+								if(x.location !== p.filters.location){
+									shouldReturn = false;
+								}
+							})
+						})
+					}
 
 					if(shouldReturn === true){
 						shouldReturn = false;
@@ -139,6 +159,7 @@ class Container extends React.Component{
 			this.setState({cuerrent_state:'lost'})
 
 		}
+
 
 		if(p.query_string !== ''){
 			this.setState({
