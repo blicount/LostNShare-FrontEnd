@@ -96,7 +96,7 @@ class CategoryMannage extends React.Component{
         document.getElementById('mannageSubCategory').innerHTML = '';
         this.setState({mannage_selected_category:this.state.category[index].name})
         if(selectedCategory !== "All"){   
-            axios.post('https://lost-and-share.herokuapp.com/subcategories/getAllSubCategoryByCategory', {category:this.state.category[index-1].name} )         
+            axios.post('https://lost-and-share.herokuapp.com/subcategories/getAllSubCategoryByCategory', {category:this.state.category[index].name} )         
             .then((data)=>{    
                         console.log(data)
                         this.setState({

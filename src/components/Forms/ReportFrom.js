@@ -1,11 +1,12 @@
 import React from 'react';
-//import axios from 'axios';
 import {withRouter} from 'react-router-dom';
-//import {Redirect} from 'react-router-dom';
 import "../../css/report.css";
+import ColorPicker from 'rc-color-picker'
 import "../../css/bootstrap.min.css"
 import axios from 'axios';
-//import LoginPage from '../Pages/LoginPage';
+import { Panel as ColorPickerPanel } from 'rc-color-picker';
+import 'rc-color-picker/assets/index.css';
+
 
 class ReportForm extends React.Component {
     constructor(props) {
@@ -16,14 +17,25 @@ class ReportForm extends React.Component {
             file:'',
             image:'',
             item_state:'lost',
-            location:'',
+            location:'test',
             imagePreviewUrl:'',
             selected_category:'',
             selected_sub_category:'',
             sub_category:[],
             category:[],
             selected_item_id:'',
-            image_name:''
+            image_name:'',
+            shape:[
+                'triangle',
+                'trapezoid',
+                'star',
+                'square',
+                'rectangle',
+                'octagon',
+                'heart',
+                'diamond'
+            ],
+            color:'blue'
 
         };
         this.onChangeCategory = this.onChangeCategory.bind(this);
@@ -31,6 +43,8 @@ class ReportForm extends React.Component {
         this.onChange = this.onChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
         this.fileSelectedHandler = this.fileSelectedHandler.bind(this);
+        this.changeHandler = this.changeHandler.bind(this)
+       
     }
 
 
@@ -64,9 +78,12 @@ class ReportForm extends React.Component {
         .then((data)=>{
                     console.log(data);
                     this.setState({location:data})}
-            ); */  		
+            ); */  	
+            
+            
     }
 
+  
 
     onChangeCategory(e){
         var index = e.target.selectedIndex
@@ -101,6 +118,9 @@ class ReportForm extends React.Component {
 
     onChange(e){
         this.setState({[e.target.name]: e.target.value});
+
+        
+        
     }
 
     fileSelectedHandler(e){
@@ -177,7 +197,11 @@ class ReportForm extends React.Component {
         });      
     }
 
-
+ 
+    changeHandler(colors){
+        console.log(colors)
+        this.setState({color:colors.color})
+    }
 
     render(){
        
@@ -250,6 +274,23 @@ class ReportForm extends React.Component {
                             </label>
                             <input id="file-upload" type="file" onChange={this.fileSelectedHandler }/>
                             <div className="imgPreview">{$imagePreview}</div>
+                            <div class="form-group ">
+                                <label id="shape_select_label" className="shape" htmlFor="shape">Shape</label>
+                                <select required id="shape_select"  className="form-control ">
+                                { 
+                                this.state.shape.map( (shp, i) => {
+                                return (
+                                    <option  className="shape" key={i}>{shp}</option>
+                                    )
+                                })
+                                }
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label id="color_select_label" className="select" htmlFor="color" >Color</label>
+                                <input type="text" className="color_textbox" name="color" value={this.state.color} class="form-control"></input>
+                                <ColorPicker className="colorPicker" enableAlpha={false} color={'#345679'}  mode="RGB" onChange={this.changeHandler} />
+                                </div>
                             </div>
 
                             <div className="form-group">
@@ -269,22 +310,10 @@ class ReportForm extends React.Component {
                             </select>
                             <label  id="location_select" className="select" htmlFor="location">Location</label>
                             <select required id="subCategory" className="form-control-report form-control"
-                                 /*onChange={this.onChangeSubCategory}*/>
+                                 onChange={this.onChangeSubCategory}>
                             </select>
                             </div>
                             <span className="line"/>
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <label id="shape_select" className="select" htmlFor="shape">Shape</label>
-                                    <select required id="subCategory" className="form-control-report form-control">
-                                    </select>
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label id="color_select" className="select" htmlFor="color">Color</label>
-                                    <select required id="subCategory" className="form-control-report form-control">
-                                    </select>                                
-                                </div>
-                            </div>
                             <button type="submit" className="btn btn-primary btn-block">
                             Submit
                             </button>
@@ -296,7 +325,6 @@ class ReportForm extends React.Component {
         );
     }
 }
-
 
 
  

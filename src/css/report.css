@@ -82,3 +82,14 @@ input[type="file"] {
     margin-top:25px;;
 }
 
+#color_textbox{
+    max-width: 200px !important;
+    width: 100%;
+}
+
+.colorPicker{
+    position: absolute;
+    top: 90%;
+    left: 90%
+}
+
