@@ -113,8 +113,8 @@ class CategoryMannage extends React.Component{
                                 op.appendChild(textnode);
                                 document.getElementById('mannageSubCategory').appendChild(op);
                             }
-                            var op = document.createElement("option");
-                            var textnode = document.createTextNode(sub_cat); 
+                            op = document.createElement("option");
+                            textnode = document.createTextNode(sub_cat); 
                             op.className = 'mannage_subcategory_node';
                             op.key = i+1;
                             op.appendChild(textnode);

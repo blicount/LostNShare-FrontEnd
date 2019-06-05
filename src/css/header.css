@@ -79,3 +79,8 @@ nav a:hover{
 }
 
 
+.loading{
+   max-width: 150px !important;
+   max-height: 150px !important;
+
+}

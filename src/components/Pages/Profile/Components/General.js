@@ -1,15 +1,21 @@
 import React from 'react';
 import Massage      from '../../../Objects/Massage';
-
+import axios from 'axios'
 
 class General extends React.Component{
 	constructor(props){
 		super(props)
 		this.state = {
 			user:[],
+			profile_name:'',
+			profile_email:'',
+			profile_phone:'',
+			old_password:'',
+			password_confirm_1:'',
+			password_confirm_2:''
 
 		 }
-		
+		this.onChange = this.onChange.bind(this)
 	}
 
 	componentWillMount(){
@@ -19,40 +25,27 @@ class General extends React.Component{
 	}
 
 	onChange(e){
+		console.log(e.target.value)
         this.setState({[e.target.name]: e.target.value});
     }
 	
 	onSubmit(e){
-        e.preventDefault();
-       /*
-        this.props.userRegisterRequest(this.state).then(            
-            ({ data }) =>{
-                console.log(data);
-                 this.setState({err:data.err,isLoading: false,status:data.status})
-                 if(this.state.password !== this.state.password2){
-                    document.getElementById("password").style.borderColor  = "red";
-                    document.getElementById("password2").style.borderColor  = "red";
-                    document.getElementById("label_password").innerHTML = "Passwords - dosen't match";
-                    document.getElementById("label_password").style.color  = "red";  
-                 }
-                 else if(this.state.status === 'fail'){
-                    document.getElementById("email").style.borderColor  = "red";
-                    document.getElementById("label_email").innerHTML = "Email - this Email is already in use";
-                    document.getElementById("label_email").style.color  = "red";  
-                    this.setState({err:{},isLoading: false,status:{}})      
-                }else{
-                    this.setState({login:true})
-                    sessionStorage.setItem("userData", JSON.stringify(this.state));  
-                    window.location.assign('/')
-
-                }
-            }
-        ).catch((error) =>{
-            console.log(error);
-            
-		});
-		*/   
-    }
+		e.preventDefault();
+		console.log(e)
+		axios.post('https://lost-and-share.herokuapp.com/Users/UpdateUser',{
+				email : this.state.profile_email,
+				phone: this.state.phone,
+				password: this.state.password,
+				name:this.state.name
+			}).then((respone) => {
+				console.log(respone.data)
+				this.setState({
+					userList:respone.data
+				})
+			}).catch((error) => {
+				console.log(error);
+			})
+	}
 
 	render(){
 		if (sessionStorage.getItem('userData') == null) {
@@ -90,13 +83,26 @@ class General extends React.Component{
 								/>
 								</div>
 								<div className="form-group">
+								<label htmlFor="profile_phone">Phone</label>
+								<input
+									value={this.state.user.phone}
+									onChange={this.onChange}
+									type="phone"
+									id="profile_phone"
+									name="profile_phone"
+									className="form-control"
+									placeholder="Enter phone"
+									pattern=".{10}" required title="05..."
+								/>                    
+								</div>
+								<div className="form-group">
 								<label id="label_password" htmlFor="password_confirm_1">Password</label>
 								<input
 									
 									onChange={this.onChange}
-									type="password_confirm_1"
-									id="password_confirm_1"
-									name="password"
+									type="password"
+									id="old_password"
+									name="old_password"
 									className="form-control"
 									placeholder="Old Password"
 									pattern=".{6,10}" required title="6 to 10 characters"               
@@ -108,10 +114,10 @@ class General extends React.Component{
 									
 									onChange={this.onChange}
 									type="password"
-									id="password_confirm_2"
-									name="password_confirm_2"
+									id="password_confirm_1"
+									name="password_confirm_1"
 									className="form-control"
-									placeholder="Confirm Password"
+									placeholder="New Password"
 									pattern=".{6,10}" required title="6 to 10 characters"               
 								/>
 								</div>
@@ -121,10 +127,10 @@ class General extends React.Component{
 									
 									onChange={this.onChange}
 									type="password"
-									id="new_password"
-									name="new_password"
+									id="password_confirm_2"
+									name="password_confirm_2"
 									className="form-control"
-									placeholder="New Password"  
+									placeholder="Confirm"  
 									pattern=".{6,10}" required title="6 to 10 characters"     
 								/>
 						</div>

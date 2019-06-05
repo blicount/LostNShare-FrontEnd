@@ -24,8 +24,6 @@ class SideBar extends React.Component{
     componentWillMount(){
         if(localStorage.getItem('PrevSideBarState') !== null){
             var state = JSON.parse(localStorage.getItem('PrevSideBarState'))
-            console.log("old state")
-            console.log(state.selected_category)
             this.setState({state:state.state })
          
         }

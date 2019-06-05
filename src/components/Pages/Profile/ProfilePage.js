@@ -26,6 +26,7 @@ class ProfilePage extends React.Component {
                 { label: 'Item Mannage', active: false }
             ],
             mannager: false,
+            loading:true,
             visibleLink: 'General'
         }
         this.handleClickSelection = this.handleClickSelection.bind(this);
@@ -36,14 +37,15 @@ class ProfilePage extends React.Component {
     componentWillMount() {
         var user = JSON.parse(sessionStorage.getItem('userData'));
         var mannager = false;
-        console.log(user.email)
+        
         axios.post('https://lost-and-share.herokuapp.com/users/CheckIfManger', { email: user.email } ).then(            
             ({ data }) =>{
-                console.log(data);    
+           
                 mannager = data; 
                 if (mannager) {
                     this.setState({
                         mannager:true,
+                        loading:false,
                         links: [
                             { label: 'General', active: true },
                             { label: 'My Items', active: false },
@@ -56,6 +58,7 @@ class ProfilePage extends React.Component {
                     })
                 } else {
                     this.setState({
+                        loading:false,
                         links: [
                             { label: 'General', active: true },
                             { label: 'My Items', active: false },
@@ -107,6 +110,12 @@ class ProfilePage extends React.Component {
 
         if (sessionStorage.getItem('userData') == null) {
             return (<Massage />)
+        }
+        if(this.state.loading){
+            return(
+               
+                <img alt="logo" className="loading" src="https://gdurl.com/NXps" />
+            )
         }
         if (this.state.mannager) {
             return (

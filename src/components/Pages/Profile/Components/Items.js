@@ -15,7 +15,6 @@ class Items extends React.Component {
 			owner_items: [],
 			updateItemSelected: null,
 			selectedIndex: null
-
 		}
 
 		this.updateItem = this.updateItem.bind(this);
@@ -24,21 +23,54 @@ class Items extends React.Component {
 		this.matchItem = this.matchItem.bind(this);
 	}
 
+
+
 	componentWillMount() {
 		var user = JSON.parse(sessionStorage.getItem('userData'));
-
+		var mannager = false;
 		if(user !== null){
-			axios.post('https://lost-and-share.herokuapp.com/items/getItemByOwner', user)
-				.then((data) => {
-					console.log(data.data)
-					if (data.data !== 'no Item found') {
-						this.setState({ owner_items: data.data })
+			axios.post('https://lost-and-share.herokuapp.com/users/CheckIfManger', { email: user.email } ).then(            
+				({ data }) =>{
+			
+					mannager = data;
+					if(this.props.ItemMannage === undefined ||  this.props.ItemMannage !== true) {
+						mannager = false;
 					}
-				}
-				)
-				.catch((error) => {
-					console.log(error);
-				})
+					if (mannager) {
+						axios.get('https://lost-and-share.herokuapp.com/items/getAllItems')
+						.then((data) => {
+							console.log(data.data)
+							if (data.data !== 'no Item found') {
+								this.setState({ owner_items: data.data })
+							}
+						}
+						)
+						.catch((error) => {
+							console.log(error);
+						})
+
+					} else {
+						axios.post('https://lost-and-share.herokuapp.com/items/getItemByOwner', user)
+						.then((data) => {
+							console.log(data.data)
+							if (data.data !== 'no Item found') {
+								this.setState({ owner_items: data.data })
+							}
+						}
+						)
+						.catch((error) => {
+							console.log(error);
+						})
+					}
+
+				}                                                                                  
+				
+			).catch((error) =>{
+				console.log(error);      
+			}) 
+		
+		
+
 		}
 	}
 
@@ -60,7 +92,7 @@ class Items extends React.Component {
 			var email = this.state.owner_items[index].owner;
 			axios.delete('https://lost-and-share.herokuapp.com/items/DeleteItem', { data: { id, email } }).then(
 				(respone) => {
-					if (respone.data === "Item deleted") {
+					if (respone.data === "Item deleted" || respone.data === "Item deleted without delete events attached" || respone.data === "Item and events attached deleted") {
 						this.setState({
 							owner_items: this.state.owner_items.
 								filter(function (item) {
@@ -153,8 +185,14 @@ class Items extends React.Component {
 			);
 		}
 		else {
-			return (
-				<p className={this.props.isVisible} >No items are listed</p>
+			return (	
+				<div className={this.props.isVisible === 'hidden' ? 'hidden' :"visible row mt-5"}>
+					<div className="col-md-6 m-auto">
+						<div className="card card-body">  
+							<p className= "massage" >No items are listed</p>
+						</div>
+					</div>
+				</div>
 			)
 		}
 	}

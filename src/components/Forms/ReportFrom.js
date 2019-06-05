@@ -157,15 +157,19 @@ class ReportForm extends React.Component {
         fd.append("location",this.state.location)
         fd.append("desc",this.state.description)
 
+        
 
-        console.log(fd)
+        if(localStorage.getItem('PrevSideBarState') !== null){
+            var state = JSON.parse(localStorage.getItem('PrevSideBarState'))
+            state.state = this.state.item_state;
+            console.log(state)
+            localStorage.setItem('PrevSideBarState', JSON.stringify(state));
+        }
 
 
         this.props.userReportRequest(fd).then(            
             ({ data }) =>{
-
-                    this.props.history.push('/inventory');
-                    console.log(data)
+                    this.props.history.push('/inventory');   
             }
         ).catch((error) =>{
             console.log(error);

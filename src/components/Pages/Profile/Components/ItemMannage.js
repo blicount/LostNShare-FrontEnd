@@ -1,16 +1,18 @@
 import React from 'react';
 import Massage      from '../../../Objects/Massage';
-
+import Items	from './Items'
 
 class ItemMannage extends React.Component{
 	constructor(props){
 		super(props)
 		this.state = {
+			ItemMannage:true
 		 }
 
 	}
 
-	componentDidMount(){
+	componentWillMount(){
+
 	}
 
  
@@ -23,7 +25,7 @@ class ItemMannage extends React.Component{
 		console.log(this.props.isVisible)
 		return(
 			<div className={this.props.isVisible}>
-ItemMannage
+				<Items ItemMannage={this.state.ItemMannage}/>
             </div>
 			
 			);
