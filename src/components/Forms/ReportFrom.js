@@ -1,10 +1,8 @@
 import React from 'react';
 import {withRouter} from 'react-router-dom';
 import "../../css/report.css";
-import ColorPicker from 'rc-color-picker'
 import "../../css/bootstrap.min.css"
 import axios from 'axios';
-import { Panel as ColorPickerPanel } from 'rc-color-picker';
 import 'rc-color-picker/assets/index.css';
 
 
@@ -22,22 +20,14 @@ class ReportForm extends React.Component {
             imagePreviewUrl:'',
             selected_category:'',
             selected_sub_category:'',
+            shape_selected : '',
+            color_selected : '',
             sub_category:[],
             category:[],
             selected_item_id:'',
             image_name:'',
-            shape:[
-                'none',
-                'triangle',
-                'trapezoid',
-                'star',
-                'square',
-                'rectangle',
-                'octagon',
-                'heart',
-                'diamond'
-            ],
-            color:'none'
+            shape:[],
+            color:[]
 
         };
         this.onChangeCategory = this.onChangeCategory.bind(this);
@@ -47,6 +37,8 @@ class ReportForm extends React.Component {
         this.fileSelectedHandler = this.fileSelectedHandler.bind(this);
         this.changeHandler = this.changeHandler.bind(this);
         this.onChangeLocation = this.onChangeLocation.bind(this);
+        this.onChangeShape = this.onChangeShape.bind(this);
+        this.onChangeColor = this.onChangeColor.bind(this);
     }
 
 
@@ -54,16 +46,30 @@ class ReportForm extends React.Component {
         axios.get('https://lost-and-share.herokuapp.com/Categories/getAllCategories')         
         .then((data)=>{
                     this.setState({category:data.data})
+                    console.log(data)
                 }
-            ).catch((error) => (console.log(error)));  
+            ).catch((error) => (console.log(error)))  
 
         axios.get('https://lost-and-share.herokuapp.com/Locations/getAllLocatoins')         
         .then((data)=>{
                     this.setState({location:data.data})
                 }
-            ).catch((error) => (console.log(error))); 
-            
-            
+            ).catch((error) => (console.log(error)))
+
+        axios.get('https://lost-and-share.herokuapp.com/shapes/getAllShapes')
+        .then((data)=>{
+            console.log(data)
+           this.setState({shape:data.data})
+        }
+        ).catch(err=> console.log(err))
+
+        axios.get('https://lost-and-share.herokuapp.com/colors/getAllColors')
+        .then((data)=>{
+            this.setState({color:data.data})
+            console.log(data)
+        }
+        ).catch(err=> console.log(err))
+        
     }
 
   
@@ -101,10 +107,7 @@ class ReportForm extends React.Component {
     }
 
     onChange(e){
-        this.setState({[e.target.name]: e.target.value});
-
-        
-        
+        this.setState({[e.target.name]: e.target.value});   
     }
 
     fileSelectedHandler(e){
@@ -140,6 +143,16 @@ class ReportForm extends React.Component {
         this.setState({location_selected:e.target.value})
     }
 
+    onChangeShape(e){
+        console.log(e.target.value)
+        this.setState({shape_selected:e.target.value})
+    }
+
+    onChangeColor(e){
+        console.log(e.target.value)
+        this.setState({color_selected:e.target.value})
+    }
+
     onSubmit(e){
         e.preventDefault();
 
@@ -153,6 +166,8 @@ class ReportForm extends React.Component {
             ItemImage   : this.state.image,
             location    : this.state.location,
             desc        : this.state.description,
+            shape       : this.state.shape,
+            color       : this.state.color
         }
 
         console.log(itemData)
@@ -211,7 +226,9 @@ class ReportForm extends React.Component {
                 <div className="row mt-5 row-report">
                     <div className="col-md-6 m-auto">
                         <div className="card card-body report-card"> 
-                        <h3>Item Information</h3>                      
+                        <h3>Item Information</h3> 
+                        <p className="comment">*Founder please avoid give in key details on item
+                        <br></br>and avoid uploding pic that expose unique details</p> 
                         <form  onSubmit={this.onSubmit} encType="multipart/form-data">
                             <div className="form-group">
                             <label htmlFor="title">Tilte</label>
@@ -242,7 +259,7 @@ class ReportForm extends React.Component {
                             />
                             </div>
                             <div className="form-group">
-                            <label htmlFor="state">Item State:</label>
+                            <label htmlFor="state">Item Type:</label>
                             <input type="radio"   
                                 checked={this.state.item_state === 'lost'} 
                                 value="lost"
@@ -270,11 +287,11 @@ class ReportForm extends React.Component {
                             <div className="imgPreview">{$imagePreview}</div>
                             <div className="form-group ">
                                 <label id="shape_select_label" className="shape" htmlFor="shape">Shape</label>
-                                <select required id="shape_select"  className="form-control ">
+                                <select required id="shape_select"  className="form-control" onChange={this.onChangeShape}>
                                 { 
                                 this.state.shape.map( (shp, i) => {
                                 return (
-                                    <option  className="shape" key={i}>{shp}</option>
+                                    <option  className="shape" key={i}>{shp.name}</option>
                                     )
                                 })
                                 }
@@ -282,11 +299,17 @@ class ReportForm extends React.Component {
                             </div>
                             <div className="form-group">
                                 <label id="color_select_label" className="select" htmlFor="color" >Color</label>
-                                <input type="text" className="color_textbox form-control" value={this.state.color} onChange={this.changeHandler} name="color" id="colorPicker" ></input>
-                                <ColorPicker className="colorPicker" enableAlpha={false} color={'#345679'}  mode="RGB" onChange={this.changeHandler} />
+                                <select required id="shape_color"  className="form-control" onChange={this.onChangeColor}>
+                                { 
+                                this.state.color.map( (col, i) => {
+                                return (
+                                    <option  className="color" key={i}>{col.name}</option>
+                                    )
+                                })
+                                }
+                                </select>
                                 </div>
                             </div>
-
                             <div className="form-group">
                             <label id="category_select" className="select" htmlFor="catagory">Catagory</label>
                             <select required className="form-control-report form-control" onChange={this.onChangeCategory}>

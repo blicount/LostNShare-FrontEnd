@@ -36,6 +36,7 @@ class Main extends React.Component {
 		return(
             <div>
                 <main>
+                    <h3 id="agenda">Welcome to LostNShare the platform that gathers reports of lost and found items</h3>
                     <h4>Most Recent</h4>
                     <section id="most_recent">
                         <article>
