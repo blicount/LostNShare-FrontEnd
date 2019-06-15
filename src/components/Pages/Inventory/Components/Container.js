@@ -10,7 +10,6 @@ class Container extends React.Component {
 		this.state = {
 			items: [],
 			current_display_items: [],
-			filter_display_items: [],
 			cuerrent_state: 'found',
 			loading: true
 		}
@@ -90,7 +89,7 @@ class Container extends React.Component {
 						shouldReturn = false;
 					}
 
-					if (p.filters.location !== '' || p.filters.location !== "All") {
+					if (p.filters.location !== '' && p.filters.location !== "All") {
 						this.setState({
 							current_display_items: this.state.current_display_items.filter((x) => {
 								//console.log(x.location + " !=" + p.filters.location)
@@ -126,7 +125,7 @@ class Container extends React.Component {
 								shouldReturn = true;
 							}
 						}
-
+						
 					}
 					//console.log("from: "  + x.updatedate.substring(0,10) + " = " + p.filters.date_from)
 					if (Date.parse(x.updatedate.substring(0, 10)) < Date.parse(p.filters.date_from) && p.filters.date_from !== '') {
@@ -138,7 +137,7 @@ class Container extends React.Component {
 						shouldReturn = false;
 					}
 
-					if (p.filters.location !== '' || p.filters.location !== "All") {
+					if (p.filters.location !== '' && p.filters.location !== "All") {
 						this.setState({
 							current_display_items: this.state.current_display_items.filter((x) => {
 								//console.log(x.location + " !=" + p.filters.location)
@@ -148,6 +147,7 @@ class Container extends React.Component {
 							})
 						})
 					}
+
 					if (shouldReturn === true) {
 						shouldReturn = false;
 						return x;

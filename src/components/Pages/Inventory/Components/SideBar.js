@@ -12,7 +12,7 @@ class SideBar extends React.Component {
             state: 'found',
             selected_category: '',
             selected_sub_category: '',
-            location_selected: '',
+            location_selected: 'All',
             date_to: '',
             date_from: '',
             location: ''

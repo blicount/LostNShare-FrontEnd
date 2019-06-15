@@ -16,12 +16,12 @@ class ReportForm extends React.Component {
             image: '',
             item_state: 'lost',
             location: [],
-            location_selected: '',
+            location_selected: 'none',
             imagePreviewUrl: '',
             selected_category: '',
             selected_sub_category: '',
-            shape_selected: '',
-            color_selected: '',
+            shape_selected: 'none',
+            color_selected: 'none',
             sub_category: [],
             category: [],
             selected_item_id: '',
@@ -108,10 +108,10 @@ class ReportForm extends React.Component {
 
     onChange(e) {
         this.setState({ [e.target.name]: e.target.value });
-        if (e.target.value === "lost") {
-            document.getElementsByClassName('comment')[0].style.visibility = 'hidden';
-        } else {
+        if (e.target.value === "found") {
             document.getElementsByClassName('comment')[0].style.visibility = 'visible';
+        } else {
+            document.getElementsByClassName('comment')[0].style.visibility = 'hidden';
         }
     }
 
@@ -186,8 +186,8 @@ class ReportForm extends React.Component {
         fd.append("subcategory", this.state.selected_sub_category)
         fd.append("location", this.state.location)
         fd.append("desc", this.state.description)
-        fd.append("shape", this.state.shape)
-        fd.append("color", this.state.color)
+        fd.append("shape", this.state.shape_selected)
+        fd.append("color", this.state.color_selected)
         fd.append("location", this.state.location_selected)
 
 

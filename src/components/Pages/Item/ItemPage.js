@@ -96,9 +96,9 @@ class ItemPage extends React.Component {
             <p className="property_item_subcategory">SubCategory:{' ' + this.state.subcategory}</p>
             <p className="property_item_title" >{this.state.title}</p>
             <p className="property_item_description" >{this.state.description}</p>
-            <p className="property_item_owner">Owner: <a id="owner_a" onClick={this.onClickEmail}>{' ' + this.state.owner}</a></p>
+            <p className="property_item_owner">{this.state.itemtype + ' by'}: <a id="owner_a" onClick={this.onClickEmail}>{' ' + this.state.owner}</a></p>
             <p className="property_item_location">Location: {this.state.location}</p>
-            <p className="property_item_type">Item case:
+            <p className="property_item_type">Item type:
 												<i style={this.state.itemtype === 'Found' || this.state.itemtype === 'found' ? { color: "green" } : { color: "red" }}>
                 {' ' + this.state.itemtype}
               </i>
