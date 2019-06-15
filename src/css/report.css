@@ -5,13 +5,19 @@ h3{
     font-size: 25px !important;
     margin-bottom: 10px;
 }
+h5{
+    margin: auto;
+    position: relative;
+    left: 0%;  
+    margin-bottom: 10px;
+}
 
 .radio{
     margin-left: 25px;
 }
 
 .select{
-    margin-top: 2% !important;
+    margin-top: 2%;
 }
 
 .form-control-report{
@@ -29,10 +35,9 @@ h3{
 
 .upload_photo{
     position: absolute ;
-    top: 18% ;
+    top: 14% ;
     right: 10%;
     width: 25%;
-
 
 }
 
@@ -44,6 +49,8 @@ h3{
   width: 100%;
   display: block;
   border-radius: 3px;
+  margin-bottom: 55px;
+
 
 }
 .imgPreview img{
@@ -95,5 +102,6 @@ input[type="file"] {
 
 .comment{
     color: red;
+    visibility: hidden;
 }
 

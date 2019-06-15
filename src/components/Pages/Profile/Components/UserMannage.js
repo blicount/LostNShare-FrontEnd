@@ -23,22 +23,21 @@ class UserMannage extends React.Component{
 	
 	deleteUser(e) {
 		var index = e.target.getAttribute('index');
-		/*if (index !== null) {
+		if (index !== null) {
 			var id = this.state.owner_items[index]._id;
 			var email = this.state.owner_items[index].owner;
 			axios.delete('https://lost-and-share.herokuapp.com/items/DeleteUser', { data: { id, email } }).then(
 				(respone) => {
 					if (respone.data === "Item deleted") {
 						this.setState({
-							owner_items: this.state.owner_items.
-								filter(function (item) {
+							owner_items: this.state.owner_items.filter(function (item) {
 									return item._id !== id
 								})
 						});
 					}
 				}
 			)
-		}*/
+		}
 	}
 
 	render(){

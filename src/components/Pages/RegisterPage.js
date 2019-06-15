@@ -6,11 +6,10 @@ import {userRegisterRequest} from '../../actions/formActions'
 import "../../css/bootstrap.min.css"
  
 class RegisterPage extends React.Component {
-    /*
     constructor(props) {
         super(props);
     }
-   */
+    
     render(){
         const {userRegisterRequest} = this.props;
         const {googleUserData} = this.props;

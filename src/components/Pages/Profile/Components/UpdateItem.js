@@ -44,7 +44,7 @@ class UpdateItem extends React.Component {
                 this.setState({ category: data.data, selected_category: data.data[0]._id })
                 axios.post('https://lost-and-share.herokuapp.com/subcategories/getAllSubCategoryByCategory', { category: data.data[0].name })
                     .then((data) => {
-                        //console.log(data);
+                        console.log(data);
 
                         this.setState({
                             sub_category: data.data.subcategorylist,
@@ -76,20 +76,20 @@ class UpdateItem extends React.Component {
 
     componentWillReceiveProps(p) {
         if (p.item !== null) {
-            this.setState({ 
+            this.setState({
                 selected_item_id: p.item._id,
-                title: p.item.title ?  p.item.title : '',
+                title: p.item.title ? p.item.title : '',
                 description: p.item.desc ? p.item.desc : '',
                 //file: '',
                 //image: '',
                 item_state: p.item.itemstate,
                 item_type: p.item.itemtype,
                 location: 'test',
-                imagePreviewUrl: p.item.picpath ? 'https://lost-and-share.herokuapp.com/' + p.item.picpath : '',
+                imagePreviewUrl: p.item.picpath ? p.item.picpath : '',
                 //selected_category: '',
                 //selected_sub_category: '',
             })
-            
+
         }
         //console.log(p.item);
     }
@@ -105,7 +105,6 @@ class UpdateItem extends React.Component {
 
     onChangeCategory(e) {
         var index = e.target.selectedIndex
-        var selectedCategory = this.state.category[index].name
         document.getElementById('subCategory').innerHTML = '';
         this.setState({ selected_category: this.state.category[index].name })
         axios.post('https://lost-and-share.herokuapp.com/subcategories/getAllSubCategoryByCategory', { category: this.state.category[index].name })
@@ -229,7 +228,7 @@ class UpdateItem extends React.Component {
                                 <div className="form-group">
                                     <label htmlFor="description">Description</label>
                                     <input
-                                        value={this.state.description }
+                                        value={this.state.description}
                                         onChange={this.onChange}
                                         type="description"
                                         id="description"

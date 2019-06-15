@@ -1,6 +1,5 @@
 import React from 'react';
 import NavigationBar from './NavigationBar'
-//import {Redirect} from 'react-router-dom';
 import "../css/header.css"
 
 class Header extends React.Component {
@@ -16,9 +15,9 @@ class Header extends React.Component {
                 { label: 'login', link: '/login', active: false }
             ]
         };
-
         this.handleClickSelection = this.handleClickSelection.bind(this);
     };
+
     componentWillMount() {
         var name = JSON.parse(sessionStorage.getItem('userData'));
 
@@ -33,7 +32,6 @@ class Header extends React.Component {
             })
         } else {
             var user_id = JSON.parse(sessionStorage.getItem('userData')).id;
-
             this.setState({
                 links: [
                     { label: 'inventory', link: '/inventory', active: false },
@@ -48,26 +46,19 @@ class Header extends React.Component {
 
 
     handleClickSelection(e) {
-
-        //console.log(e.target.text)
         if (e.target.text === 'logout') {
             sessionStorage.removeItem('userData');
             localStorage.removeItem('PrevSideBarState');
             this.props.history.push('/');
         }
-
-
         this.state.links.forEach(element => {
-            //console.log(element.label);
             if (element.label === e.target.text) {
-                //console.log(element)
                 element.active = true;
             } else {
                 element.active = false
             }
         });
     }
-
 
     render() {
         return (
@@ -81,10 +72,5 @@ class Header extends React.Component {
         );
     }
 }
-
-
-
-
-
 
 export default Header;

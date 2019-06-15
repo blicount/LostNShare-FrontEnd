@@ -6,12 +6,11 @@ import {googleUserData} from '../../actions/formActions'
 import "../../css/bootstrap.min.css"
  
 class LoginPage extends React.Component {
-   /* constructor(props) {
+    constructor(props) {
         super(props);
  
     }
-   */
-
+   
     render(){
         const {userLoginRequest} = this.props;
         const {googleUserData} = this.props;
@@ -24,8 +23,5 @@ class LoginPage extends React.Component {
  
     }
 }
-
-
-
 
 export default connect(null,{userLoginRequest,googleUserData} ) (LoginPage);

@@ -78,8 +78,6 @@ class Items extends React.Component {
 	updateItem(e) {
 		var index = e.target.getAttribute('index');
 		if (index !== null) {
-			var item = this.state.owner_items[index];
-			var owner = this.state.owner_items[index].owner;
 			document.getElementsByClassName('update_item')[0].style.visibility = "visible";
 			this.setState({ updateItemSelected: this.state.owner_items[index], selectedIndex: index })
 		}
@@ -129,10 +127,9 @@ class Items extends React.Component {
 	matchItem(e){
 		var index = e.target.getAttribute('index');
 		if (index !== null) {
-			
 			axios.get('https://lost-and-share.herokuapp.com/items/matchingServiceForItem/' + this.state.owner_items[ index]._id)
 				.then((data) => {
-					console.log(data)
+					this.props.history.push('../../item/' + this.state.owner_items[index]._id)
 				})
 				.catch((error) => {
 					console.log(error);

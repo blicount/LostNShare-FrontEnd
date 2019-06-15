@@ -44,19 +44,7 @@ class Serach extends React.Component{
                         <button type="submit"  onClick={this.handleSearch}>
                             <i id="btn-search"  ></i>
                         </button>
-                    </div>
-                    <span className="form-group view-span">
-                        <select className="form-control view">
-                              <option>List</option>
-                              <option>Gallary</option>
-                        </select>
-                    </span>
-                    <span className="form-group order-span">
-                        <select className="form-control order">
-                              <option>Date added</option>
-                              <option>Top match</option>
-                        </select>
-                    </span>
+                    </div>  
                     <hr></hr>
 				</span>    
 			);
