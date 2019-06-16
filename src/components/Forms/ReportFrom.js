@@ -197,6 +197,10 @@ class ReportForm extends React.Component {
             state.state = this.state.item_state;
             console.log(state)
             localStorage.setItem('PrevSideBarState', JSON.stringify(state));
+        }else{
+            var state = this.state.item_state;
+            state.state = this.state.item_state;
+            localStorage.setItem('PrevSideBarState', JSON.stringify(state));
         }
 
 
