@@ -35,7 +35,6 @@ class ReportForm extends React.Component {
         this.onChange = this.onChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
         this.fileSelectedHandler = this.fileSelectedHandler.bind(this);
-        this.changeHandler = this.changeHandler.bind(this);
         this.onChangeLocation = this.onChangeLocation.bind(this);
         this.onChangeShape = this.onChangeShape.bind(this);
         this.onChangeColor = this.onChangeColor.bind(this);
@@ -78,7 +77,7 @@ class ReportForm extends React.Component {
         var index = e.target.selectedIndex
         var selectedCategory = this.state.category[index].name
         document.getElementById('subCategory').innerHTML = '';
-        this.setState({ mannage_selected_category: this.state.category[index].name })
+        this.setState({ mannage_selected_category: this.state.category[index].name ,selected_category:selectedCategory})
         if (selectedCategory !== "All") {
             axios.post('https://lost-and-share.herokuapp.com/subcategories/getAllSubCategoryByCategory', { category: this.state.category[index].name })
                 .then((data) => {
@@ -210,11 +209,7 @@ class ReportForm extends React.Component {
     }
 
 
-    changeHandler(colors) {
-        console.log(colors)
-        this.setState({ color: colors.color })
-
-    }
+ 
 
     render() {
 

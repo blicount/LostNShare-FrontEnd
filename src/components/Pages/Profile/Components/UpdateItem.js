@@ -19,13 +19,19 @@ class UpdateItem extends React.Component {
             image: '',
             item_state: 'lost',
             item_type: 'lost',
-            location: 'test',
+            location: [],
+            location_selected: 'none',
+            location:[],
             imagePreviewUrl: '',
             selected_category: '',
             selected_sub_category: '',
             sub_category: [],
             category: [],
-            selected_item_id: ''
+            selected_item_id: '',
+            shape_selected: 'none',
+            color_selected: 'none',
+            shape: [],
+            color: []
 
 
         };
@@ -34,6 +40,9 @@ class UpdateItem extends React.Component {
         this.onChange = this.onChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
         this.fileSelectedHandler = this.fileSelectedHandler.bind(this);
+        this.onChangeLocation = this.onChangeLocation.bind(this);
+        this.onChangeShape = this.onChangeShape.bind(this);
+        this.onChangeColor = this.onChangeColor.bind(this);
     }
 
 
@@ -60,38 +69,47 @@ class UpdateItem extends React.Component {
                             return (null);
                         })
                     }).catch((error) => (console.log(error)));
+            });
+        axios.get('https://lost-and-share.herokuapp.com/Locations/getAllLocatoins')
+            .then((data) => {
+                this.setState({ location: data.data })
             }
-            );
+            ).catch((error) => (console.log(error)))
 
-        /* fetch('https://lost-and-share.herokuapp.com/location')         
-         .then((Response)=>Response.json())
-         .then((data)=>{
-                     console.log(data);
-                     this.setState({location:data})}
-             ); */
+        axios.get('https://lost-and-share.herokuapp.com/shapes/getAllShapes')
+            .then((data) => {
+                console.log(data)
+                this.setState({ shape: data.data })
+            }
+            ).catch(err => console.log(err))
+
+        axios.get('https://lost-and-share.herokuapp.com/colors/getAllColors')
+            .then((data) => {
+                this.setState({ color: data.data })
+                console.log(data)
+            }
+            ).catch(err => console.log(err))
         window.addEventListener('scroll', this.listenScrollEvent);
 
 
     }
 
     componentWillReceiveProps(p) {
+        console.log(p.item)
         if (p.item !== null) {
             this.setState({
                 selected_item_id: p.item._id,
                 title: p.item.title ? p.item.title : '',
                 description: p.item.desc ? p.item.desc : '',
-                //file: '',
-                //image: '',
                 item_state: p.item.itemstate,
                 item_type: p.item.itemtype,
-                location: 'test',
+                location_selected: p.item.location ,
                 imagePreviewUrl: p.item.picpath ? p.item.picpath : '',
-                //selected_category: '',
-                //selected_sub_category: '',
+                shape_selected :p.item.shape,
+                color_selected: p.item.color
             })
 
         }
-        //console.log(p.item);
     }
 
     componentWillUnmount() {
@@ -164,6 +182,23 @@ class UpdateItem extends React.Component {
         reader.readAsDataURL(file)
     }
 
+    
+    onChangeLocation(e) {
+        console.log(e.target.value)
+        this.setState({ location_selected: e.target.value })
+    }
+
+    onChangeShape(e) {
+        console.log(e.target.value)
+        this.setState({ shape_selected: e.target.value })
+    }
+
+    onChangeColor(e) {
+        console.log(e.target.value)
+        this.setState({ color_selected: e.target.value })
+    }
+
+
     onSubmit(e) {
         e.preventDefault();
         const fd = new FormData();
@@ -174,8 +209,11 @@ class UpdateItem extends React.Component {
         fd.append("title", this.state.title)
         fd.append("category", this.state.selected_category)
         fd.append("subcategory", this.state.selected_sub_category)
-        fd.append("location", this.state.location)
+        fd.append("location", this.state.location_selected)
         fd.append("desc", this.state.description)
+        fd.append("shape", this.state.shape_selected)
+        fd.append("color", this.state.color_selected)
+        fd.append("location", this.state.location_selected)
 
         this.props.userUpdateRequest(fd).then(
             ({ data }) => {
@@ -264,6 +302,30 @@ class UpdateItem extends React.Component {
                                     </label>
                                     <input id="file-upload" type="file" onChange={this.fileSelectedHandler} />
                                     <div className="imgPreview">{$imagePreview}</div>
+                                    <div className="form-group ">
+                                        <label id="shape_select_label" className="shape" htmlFor="shape">Shape</label>
+                                        <select required id="shape_select" className="form-control" onChange={this.onChangeShape}>
+                                            {
+                                                this.state.shape.map((shp, i) => {
+                                                    return (
+                                                        <option className="shape" key={i}>{shp.name}</option>
+                                                    )
+                                                })
+                                            }
+                                        </select>
+                                    </div>
+                                    <div className="form-group">
+                                        <label id="color_select_label" className="select" htmlFor="color" >Color</label>
+                                        <select required id="shape_color" className="form-control" onChange={this.onChangeColor}>
+                                            {
+                                                this.state.color.map((col, i) => {
+                                                    return (
+                                                        <option className="color" key={i}>{col.name}</option>
+                                                    )
+                                                })
+                                            }
+                                        </select>
+                                    </div>
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="state">Item State:</label>
@@ -299,6 +361,17 @@ class UpdateItem extends React.Component {
                                     <select required id="subCategory" className="form-control-report form-control"
                                         onChange={this.onChangeSubCategory}>
                                     </select>
+                                    <label id="location_select" className="select" htmlFor="location">Location</label>
+                                    <select required id="location" className="form-control-report form-control" onChange={this.onChangeLocation}>
+                                        {
+                                            this.state.location.map((loc, i) => {
+                                                return (
+                                                    <option className="location" key={i}>{loc.name}</option>
+                                                )
+                                            })
+                                        }
+                                    </select>
+
                                 </div>
                                 <button type="submit" className="btn btn-primary btn-block">
                                     Update

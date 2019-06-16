@@ -6,6 +6,9 @@ main{
   
 }
 
+
+
+
 section{
     width: 120%;
     margin: auto;
@@ -69,3 +72,15 @@ main section:nth-child(4){
 }
 
 
+@media(  max-width: 768px ) {
+    section{
+        width: 100%;
+        margin: auto;
+        display:block;
+        background-color: #d4e3fc;
+    }
+
+
+
+    
+} 
