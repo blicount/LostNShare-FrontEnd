@@ -168,10 +168,10 @@ class ReportForm extends React.Component {
             category: this.state.selected_category,
             subcategory: this.state.selected_sub_category,
             ItemImage: this.state.image,
-            location: this.state.location,
+            location: this.state.location_selected,
             desc: this.state.description,
-            shape: this.state.shape,
-            color: this.state.color
+            shape: this.state.shape_selected,
+            color: this.state.color_selected
         }
 
         console.log(itemData)
@@ -183,7 +183,7 @@ class ReportForm extends React.Component {
         fd.append("title", this.state.title)
         fd.append("category", this.state.selected_category)
         fd.append("subcategory", this.state.selected_sub_category)
-        fd.append("location", this.state.location)
+        fd.append("location", this.state.location_selected)
         fd.append("desc", this.state.description)
         fd.append("shape", this.state.shape_selected)
         fd.append("color", this.state.color_selected)

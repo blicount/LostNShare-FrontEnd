@@ -214,3 +214,243 @@ main{
 
     padding-bottom: 100px;
 }
+
+@media(  max-width: 768px ) {
+
+
+    #inventory{
+        display: flex;
+        max-width: 1200px;
+        width: 100%;
+    }
+    
+    
+    #inventory div:nth-child(2){
+        position: relative;
+        display: block;
+        width: 100%;
+        margin-left:10px;;
+    }
+    
+    
+    
+    #side_bar{
+        max-width: 300px;
+        height: 850px;
+        width: 100%;
+        position: relative;
+        display: block;
+        overflow: hidden;
+        background-image: linear-gradient(0deg, rgba(255, 255, 255, 0.0), rgba(140, 177, 252, 0.5));}
+    
+    #side_bar select{
+        width: 80%;
+        margin: auto;
+    }
+    
+    #side_bar input{
+        width: 80%;
+        margin: auto;
+    }
+    
+    #side_bar label{
+        width: 80%;
+        margin-left:12%;
+        margin-top: 20px;
+    }
+    
+    #side_bar label:nth-child(0){
+        margin-top: 20px;
+    }
+    
+    .line{
+        max-width: 250px;
+        margin: auto;
+        height: 1px;
+        border-bottom: 1px solid rgb(95, 94, 94);
+        display: block;
+        margin-bottom: 15px;
+        margin-top:25px;
+        
+    }
+    
+    /**/
+    #search{
+        max-width:1000px;
+        width: 100%;
+        height: 50px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        display: flex;
+    }
+    
+    
+    #search div{
+        font-size: 17px;
+        max-width: 885px;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        
+    }
+    
+    #search input{
+        font-size: 17px;
+        width: 100%;
+        height: 40px;
+    }
+    
+    #search button{
+        font-size: 17px;
+        width: 40px;
+        height: 40px;
+        border-radius: 5px;
+        border: 1px solid rgb(199, 198, 198);
+        background-color: rgb(236, 236, 236);
+        left: -4.5%;
+        position: relative;
+        background-image: url("../images/search_icon.png");
+        background-size: 30px 30px;
+        background-repeat: no-repeat;
+        background-position: 5px;
+    }
+    
+    #btn-search{
+        width: 10px;;
+        height: 40px;
+        color: black;
+        border-left: none; /* Prevent double borders */
+        cursor: pointer;
+    }
+    
+    .view-span{
+        max-width: 140px;;
+        width: 100%;
+        display: block;
+        height: 40px;
+    }
+    
+    .order-span{
+        max-width: 140px;
+        width: 100%;
+        height: 40px;
+        position: relative;
+        left:1%;
+    }
+    
+    hr{
+        width: 95%;
+        display: block;
+        position: absolute;
+        top: 5%;   
+        border-style: inset;
+        border-width: 1px;
+    }
+    
+    /**/
+    main{
+        max-height: 825px;
+        height: 100%;;
+    }
+    
+    #container{
+        max-width: 880px;
+        width: 100%;
+        height: 100%;
+        display:block;
+    }
+    
+    .inventory_item{
+        width: 32%;
+        height: 150px;
+        
+        display: inline-block;
+        border:0.5px solid rgb(223, 223, 223);
+        background-color: white;
+    }
+    
+    
+    .item_title{
+        max-width: 80%;
+        width: 100%;
+        height: 20px;
+        position: relative;
+        bottom:-65%;
+        display: block;
+        overflow-x: hidden;
+        color:black;
+        margin: auto;
+        
+    }
+    
+    .item_title:hover{
+        color: rgb(89, 89, 165);
+    }
+    
+    .item_description{
+        max-width: 80%;
+        width: 100%;
+        height: 25px;
+        position: relative;
+        bottom:-65%;
+        margin-left: 15px;
+        display: block;
+        font-style: italic;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        color: rgb(212, 212, 212);
+        
+    }
+    
+    .item_img{
+        max-width: 80px;
+        max-height: 80px;
+        width: auto;
+        height: auto;
+        overflow-x: hidden;
+        vertical-align:middle;
+        position: absolute;
+        margin-left: 8%;
+        text-align: center;
+        margin-top: 1%;
+        border:1px solid rgb(184, 184, 184);
+        
+    }
+    
+    .p_id{
+        position: absolute;
+        font-size: 50px;
+    }
+    
+    .pages{
+        max-width: 880px;;
+        width: 100%;
+        top: 10%;
+        margin-left: 40%;
+    }
+    
+    .page_link{
+        margin-left: 25px;
+    
+        padding-bottom: 100px;
+    }
+
+
+}
+
+@media(  max-width: 360px ) {
+    .item_img{
+        max-width: 50px;
+        max-height: 50px;
+        width: auto;
+        height: auto;
+        overflow-x: hidden;
+        vertical-align:middle;
+        position: absolute;
+        margin-left: 8%;
+        text-align: center;
+        margin-top: 2%;
+        border:1px solid rgb(184, 184, 184);
+        
+    }
+}

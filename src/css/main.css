@@ -80,7 +80,34 @@ main section:nth-child(4){
         background-color: #d4e3fc;
     }
 
+    h4{
+        left:5%;
+        font-size: 18px !important;
+    }
 
-
+    #agenda{
+        margin-left: 1%;
+        width: 90%;
+        height: 50px;
+        font-size: 18px !important;
+        line-height: 28px;
+        text-align: center;
+    }
+    
+    #most_recent {
+        max-width: 600px; 
+        height: 500px;
+    }
+    
+    #most_recent article{
+        width: 90%;
+        margin-left:2%;
+    }
+    
+    #most_recent article div span{
+        margin-top:20px;
+       
+    }
+    
     
 } 
