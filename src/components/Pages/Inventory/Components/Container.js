@@ -46,10 +46,13 @@ class Container extends React.Component {
 						})
 					})
 				}
+				
 				this.setState({ loading: false })
+				this.forceUpdate();
 			}).catch((error) => {
 				console.log(error);
 			});
+			console.log()
 
 	}
 

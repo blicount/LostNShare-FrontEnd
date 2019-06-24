@@ -14,7 +14,7 @@ class Main extends React.Component {
     }
     componentWillMount() {
 
-        axios.get('https://lost-and-share.herokuapp.com/items/getAllActive' + this.state.cuerrent_state + 'Items/')
+        axios.get('https://lost-and-share.herokuapp.com/items/getAllActiveItems')
             .then((data) => {
                 console.log(data.data);
                 this.setState({
