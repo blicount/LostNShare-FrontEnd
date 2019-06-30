@@ -177,7 +177,9 @@ class ReportForm extends React.Component {
         console.log(itemData)
 
         const fd = new FormData();
-        fd.append('ItemImage', this.state.image, this.state.image_name)
+        if(this.state.image != ''){
+            fd.append('ItemImage', this.state.image, this.state.image_name)
+        }
         fd.append("email", user.email)
         fd.append("itemtype", this.state.item_state)
         fd.append("title", this.state.title)
@@ -187,7 +189,6 @@ class ReportForm extends React.Component {
         fd.append("desc", this.state.description)
         fd.append("shape", this.state.shape_selected)
         fd.append("color", this.state.color_selected)
-        fd.append("location", this.state.location_selected)
 
 
 
@@ -199,7 +200,7 @@ class ReportForm extends React.Component {
         }
         
         this.props.userReportRequest(fd).then(
-            ({ data }) => {
+            () => {
                 this.props.history.push('/inventory');
             }
         ).catch((error) => {

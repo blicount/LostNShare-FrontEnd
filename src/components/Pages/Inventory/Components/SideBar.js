@@ -40,6 +40,7 @@ class SideBar extends React.Component {
         axios.get('https://lost-and-share.herokuapp.com/Locations/getAllLocatoins')
             .then((data) => {
                 this.setState({ locations: data.data })
+                console.log(data.data)
             }
             ).catch((error) => (console.log(error)));
     }
