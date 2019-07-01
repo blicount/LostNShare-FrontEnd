@@ -49,7 +49,7 @@ class ProfilePage extends React.Component {
                         links: [
                             { label: 'General', active: true },
                             { label: 'My Items', active: false },
-                            { label: 'Report List', active: false },
+                            { label: 'Event List', active: false },
                             { label: 'Category Mannage', active: false },
                             { label: 'User Mannage', active: false },
                             { label: 'Item Mannage', active: false }

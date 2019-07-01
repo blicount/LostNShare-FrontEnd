@@ -76,7 +76,7 @@ class Matching extends React.Component {
 			);
 		} else {
 			return (
-				<span>There is no matching item for this yet!</span>
+				<span>There is no matching items for this item yet!<br/>to activate Matching Services go to your personal area and click on the match button.</span>
 			)
 		}
 	}

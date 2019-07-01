@@ -38,6 +38,7 @@ class ReportForm extends React.Component {
         this.onChangeLocation = this.onChangeLocation.bind(this);
         this.onChangeShape = this.onChangeShape.bind(this);
         this.onChangeColor = this.onChangeColor.bind(this);
+        this.onChangeType = this.onChangeType.bind(this);
     }
 
 
@@ -106,6 +107,11 @@ class ReportForm extends React.Component {
     }
 
     onChange(e) {
+        this.setState({ [e.target.name]: e.target.value });
+
+    }
+
+    onChangeType(e) {
         this.setState({ [e.target.name]: e.target.value });
         if (e.target.value === "found") {
             document.getElementsByClassName('comment')[0].style.visibility = 'visible';
@@ -247,7 +253,7 @@ class ReportForm extends React.Component {
                                     <input type="radio"
                                         checked={this.state.item_state === 'lost'}
                                         value="lost"
-                                        onChange={this.onChange}
+                                        onChange={this.onChangeType}
                                         id="item_state"
                                         name="item_state"
                                         className="radio"
@@ -256,7 +262,7 @@ class ReportForm extends React.Component {
                                     <input type="radio"
                                         checked={this.state.item_state === 'found'}
                                         value="found"
-                                        onChange={this.onChange}
+                                        onChange={this.onChangeType}
                                         id="item_state"
                                         name="item_state"
                                         className="radio"
