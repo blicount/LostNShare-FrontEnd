@@ -29,8 +29,8 @@ class Main extends React.Component {
         return (
             <div>
                 <main>
-                    <div className="row mt-5 ">
-                        <div className="col-md-12 m-auto">
+                    <div>
+                        <div className="col-md-13 m-auto">
                             <div className="card card-body agenda_bg">
                                 <h3 id="agenda">Welcome to LostNShare the platform that gathers reports of lost and found items</h3>
                             </div>

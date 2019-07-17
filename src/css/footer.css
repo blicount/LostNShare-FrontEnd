@@ -1,4 +1,6 @@
 footer{
+    max-width: 1900px;
+    width: 90%;
     background-color: #282c34;
     display: block;
     flex-direction: column;
@@ -14,7 +16,6 @@ footer{
     
 }
 footer a{
-    width: 100%;
     max-width: 200px;
     margin-left: 1%;
     font-size: 20px;
