@@ -23,7 +23,7 @@
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0",
     "simple-react-validator": "^1.0.5",
-    "validator": "^10.11.0",
+    "validator": "^13.7.0",
     "webpack-dev-middleware": "^3.6.1",
     "webpack-hot-middleware": "^2.24.3"
   },
